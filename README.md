@@ -14,7 +14,7 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 ?? - Denotes optional/to discuss when we get there
 
 ## Front End
-* ReactJs (Typescript??)
+* ReactJs (Typescript??, NextJs??)
 * React should be functional and use hooks, no class nonsense
 * Storybook??
 * Jest for testing (Cyprus??)
