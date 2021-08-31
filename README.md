@@ -15,9 +15,8 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 * - Optional
 
 ## Front End
-* ReactJs (Typescript??, NextJs??)
+* ReactJs NextJs
 * React should be functional and use hooks, no class nonsense
-* Storybook??
 * Jest for testing (Cyprus??)*
 * Webpack & Babel for bundle and transpile
 * Handles all the UI
@@ -28,7 +27,6 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 * Redis
 * Swagger for Documentation
 * Unit/Integration Tests (Xunit??)
-* RabbitMQ??
 * Handles mainly simple CRUD API Calls for basic resources
 
 ## High Performance API
