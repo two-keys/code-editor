@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = CodeEditorApi
+build_property.ProjectDir = C:\dev\code-editor\api\CodeEditorApi\CodeEditorApi\
