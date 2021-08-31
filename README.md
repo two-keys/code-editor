@@ -18,7 +18,6 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 * ReactJs NextJs
 * React should be functional and use hooks, no class nonsense
 * Jest for testing (Cyprus??)*
-* Webpack & Babel for bundle and transpile
 * Handles all the UI
 
 ## C# API 
