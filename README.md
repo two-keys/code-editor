@@ -7,6 +7,7 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 ## Things you should install depending on what project you are working on
 * VsCode - Just good to have
 * Visual Studio 2019 Community Edition, make sure you add the .NET Core Web Development package - For C# API
+* MS SQL Server - For C# API
 * NodeJs - For Frontend
 * Golang & Docker - For the High Performance API
 
