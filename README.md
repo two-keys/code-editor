@@ -12,7 +12,7 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 
 # Tech Details
 ?? - Denotes optional/to discuss when we get there
-* - Optional
+\* - Optional
 
 ## Front End
 * ReactJs NextJs
