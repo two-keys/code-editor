@@ -12,12 +12,13 @@ Follow the instructions [here](https://docs.github.com/en/github/authenticating-
 
 # Tech Details
 ?? - Denotes optional/to discuss when we get there
+* - Optional
 
 ## Front End
 * ReactJs (Typescript??, NextJs??)
 * React should be functional and use hooks, no class nonsense
 * Storybook??
-* Jest for testing (Cyprus??)
+* Jest for testing (Cyprus??)*
 * Webpack & Babel for bundle and transpile
 * Handles all the UI
 
