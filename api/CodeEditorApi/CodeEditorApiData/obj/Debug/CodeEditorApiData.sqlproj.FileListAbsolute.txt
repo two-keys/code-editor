@@ -1,0 +1,10 @@
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\bin\Debug\CodeEditorApiData.dacpac
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\bin\Debug\CodeEditorApiData.dll
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\bin\Debug\CodeEditorApiData.pdb
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\CodeEditorApiData.sqlproj.AssemblyReference.cache
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\Model.xml
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\refactor.xml
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\postdeploy.sql
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\predeploy.sql
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\CodeEditorApiData.dll
+C:\dev\code-editor\api\CodeEditorApi\CodeEditorApiData\obj\Debug\CodeEditorApiData.pdb

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEditorApi", "CodeEditorApi\CodeEditorApi.csproj", "{79D4F4E3-F1A2-4E37-904F-A9CE1EC97A63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeEditorApi", "CodeEditorApi\CodeEditorApi.csproj", "{79D4F4E3-F1A2-4E37-904F-A9CE1EC97A63}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CodeEditorApiData", "CodeEditorApiData\CodeEditorApiData.sqlproj", "{CF55E081-DC4D-4487-8CDF-90402801884A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{79D4F4E3-F1A2-4E37-904F-A9CE1EC97A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D4F4E3-F1A2-4E37-904F-A9CE1EC97A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D4F4E3-F1A2-4E37-904F-A9CE1EC97A63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF55E081-DC4D-4487-8CDF-90402801884A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF55E081-DC4D-4487-8CDF-90402801884A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF55E081-DC4D-4487-8CDF-90402801884A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CF55E081-DC4D-4487-8CDF-90402801884A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF55E081-DC4D-4487-8CDF-90402801884A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF55E081-DC4D-4487-8CDF-90402801884A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
