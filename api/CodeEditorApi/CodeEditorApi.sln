@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeEditorApi", "CodeEditor
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CodeEditorApiData", "CodeEditorApiData\CodeEditorApiData.sqlproj", "{CF55E081-DC4D-4487-8CDF-90402801884A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEditorApiUnitTests", "CodeEditorApiUnitTests\CodeEditorApiUnitTests.csproj", "{215F64ED-94CC-471E-B893-49928BD91A5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{CF55E081-DC4D-4487-8CDF-90402801884A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF55E081-DC4D-4487-8CDF-90402801884A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CF55E081-DC4D-4487-8CDF-90402801884A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{215F64ED-94CC-471E-B893-49928BD91A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{215F64ED-94CC-471E-B893-49928BD91A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{215F64ED-94CC-471E-B893-49928BD91A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{215F64ED-94CC-471E-B893-49928BD91A5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
