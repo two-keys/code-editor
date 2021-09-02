@@ -1,0 +1,2 @@
+# Root folder ignore case for .vs. If we need to add something from here to version control, we can do it manually with `git add -f .vs/<path>`
+.vs/
