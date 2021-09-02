@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,11 @@ namespace CodeEditorApi.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get's the weather forcast
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
