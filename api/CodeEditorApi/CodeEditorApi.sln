@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeEditorApi", "CodeEditor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeEditorApiUnitTests", "CodeEditorApiUnitTests\CodeEditorApiUnitTests.csproj", "{215F64ED-94CC-471E-B893-49928BD91A5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEditorApiDataAccess", "CodeEditorApiDataAccess\CodeEditorApiDataAccess.csproj", "{BEDA891A-F403-4865-8AE0-D0F7D8CE4511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeEditorApiDataAccess", "CodeEditorApiDataAccess\CodeEditorApiDataAccess.csproj", "{BEDA891A-F403-4865-8AE0-D0F7D8CE4511}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

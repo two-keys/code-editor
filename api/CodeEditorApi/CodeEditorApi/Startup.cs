@@ -42,8 +42,10 @@ namespace CodeEditorApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<CodeEditorContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<CodeEditorContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
