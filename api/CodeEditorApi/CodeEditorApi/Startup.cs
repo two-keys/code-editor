@@ -44,7 +44,8 @@ namespace CodeEditorApi
 
             services.AddDbContext<CodeEditorContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    assembly => assembly.MigrationsAssembly(typeof(CodeEditorContext).Assembly.FullName));
             });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
