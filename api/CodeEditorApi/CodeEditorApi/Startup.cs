@@ -1,4 +1,4 @@
-using CodeEditorApiDataAccess;
+using CodeEditorApiDataAccess.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -42,10 +42,10 @@ namespace CodeEditorApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<CodeEditorContext>(options =>
+            
+            services.AddDbContext<CodeEditorApiContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                    assembly => assembly.MigrationsAssembly(typeof(CodeEditorContext).Assembly.FullName));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
