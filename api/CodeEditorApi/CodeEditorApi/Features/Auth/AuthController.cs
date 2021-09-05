@@ -1,5 +1,4 @@
-﻿using CodeEditorApiDataAccess;
-using CodeEditorApiDataAccess.Models;
+﻿using CodeEditorApiDataAccess.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +13,20 @@ namespace CodeEditorApi.Features.Auth
     public class AuthController : ControllerBase
     {
 
-        private readonly CodeEditorContext _context;
+        private readonly CodeEditorApiContext _context;
 
-        public AuthController(CodeEditorContext context)
+        public AuthController(CodeEditorApiContext context)
         {
             _context = context;
+        }
+
+
+        [HttpGet("github")]
+        public ActionResult PostGithub([FromQuery] string code)
+        {
+
+
+            return Ok();
         }
 
         /// <summary>
