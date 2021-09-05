@@ -10,7 +10,9 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-INSERT INTO Users (Name) VALUES ('User1');
-INSERT INTO Users (Name) VALUES ('User2');
-INSERT INTO Users (Name) VALUES ('User3');
+INSERT INTO Courses (Name) VALUES ('Course1');
+INSERT INTO Courses (Name) VALUES ('Course2');
+INSERT INTO Courses (Name) VALUES ('Course3');
+
+
 

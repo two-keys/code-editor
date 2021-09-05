@@ -20,6 +20,15 @@ namespace CodeEditorApi.Features.Auth
             _context = context;
         }
 
+
+        [HttpGet("github")]
+        public ActionResult PostGithub([FromQuery] string code)
+        {
+
+
+            return Ok();
+        }
+
         /// <summary>
         /// Queries for all users
         /// </summary>
