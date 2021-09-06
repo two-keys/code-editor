@@ -15,4 +15,3 @@ INSERT INTO Courses (Name) VALUES ('Course2');
 INSERT INTO Courses (Name) VALUES ('Course3');
 
 
-

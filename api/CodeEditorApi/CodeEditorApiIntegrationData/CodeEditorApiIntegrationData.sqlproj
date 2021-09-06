@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>CodeEditorApiData</Name>
+    <Name>CodeEditorApiIntegrationData</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{a011d505-b99e-4b9e-9426-e02a2ec8f1bc}</ProjectGuid>
+    <ProjectGuid>{ada39c27-fedf-40f8-bb84-e76866151cef}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>CodeEditorApiData</RootNamespace>
-    <AssemblyName>CodeEditorApiData</AssemblyName>
+    <RootNamespace>CodeEditorApiIntegrationData</RootNamespace>
+    <AssemblyName>CodeEditorApiIntegrationData</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -56,20 +56,5 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Tables" />
   </ItemGroup>
-  <ItemGroup>
-    <Build Include="Tables\Courses.sql" />
-    <Build Include="Tables\Users.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CodeEditorApiData.publish.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Script.PostDeployment1.sql" />
-  </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>
