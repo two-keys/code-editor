@@ -7,5 +7,6 @@
     [CreateDate] DATETIME NOT NULL, 
     [ModifyDate] DATETIME NOT NULL, 
     [IsPublished] BIT NOT NULL, 
+    [StudentCount] INT NOT NULL, 
     CONSTRAINT [FK_Course_UserId] FOREIGN KEY ([Author]) REFERENCES [User]([Id])
 )
