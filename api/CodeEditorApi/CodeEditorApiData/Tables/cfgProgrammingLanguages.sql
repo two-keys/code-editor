@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[cfg_programming_languages]
+﻿CREATE TABLE [dbo].[cfgProgrammingLanguages]
 (
 	[Id] INT, 
     [Language] VARCHAR(255) NOT NULL PRIMARY KEY
