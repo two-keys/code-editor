@@ -1,5 +1,5 @@
-﻿CREATE TABLE [dbo].[Users]
+﻿CREATE TABLE [dbo].[User]
 (
 	[Id] INT IDENTITY(1,1) PRIMARY KEY,
-	[Name] VARCHAR(100)
+	[Name] VARCHAR(100) NOT NULL
 )
