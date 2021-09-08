@@ -4,12 +4,17 @@ using System.Threading.Tasks;
 
 namespace CodeEditorApi.Features.Courses.GetCourses
 {
-    public class GetCoursesCommand
+    public interface IGetCoursesCommand
+    {
+        public Task<IEnumerable<Course>> ExecuteAsync();
+    }
+
+    public class GetCoursesCommand : IGetCoursesCommand
     {
 
-        private readonly GetCourses _getCourses;
+        private readonly IGetCourses _getCourses;
 
-        public GetCoursesCommand(GetCourses getCourses)
+        public GetCoursesCommand(IGetCourses getCourses)
         {
             _getCourses = getCourses;
         }

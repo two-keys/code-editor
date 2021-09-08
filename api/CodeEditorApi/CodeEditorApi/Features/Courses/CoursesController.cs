@@ -11,9 +11,9 @@ namespace CodeEditorApi.Features.Courses
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly GetCoursesCommand _getCoursesCommand;
+        private readonly IGetCoursesCommand _getCoursesCommand;
 
-        public CoursesController(GetCoursesCommand getCoursesCommand)
+        public CoursesController(IGetCoursesCommand getCoursesCommand)
         {
             _getCoursesCommand = getCoursesCommand;
         }

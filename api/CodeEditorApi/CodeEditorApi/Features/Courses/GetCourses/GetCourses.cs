@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 
 namespace CodeEditorApi.Features.Courses.GetCourses
 {
-    public class GetCourses
+
+    public interface IGetCourses
+    {
+        public Task<IEnumerable<Course>> ExecuteAsync();
+    }
+    public class GetCourses : IGetCourses
     {
 
         private readonly CodeEditorApiContext _context;

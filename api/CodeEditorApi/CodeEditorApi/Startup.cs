@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace CodeEditorApi
@@ -49,6 +50,13 @@ namespace CodeEditorApi
             });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            var types = typeof(Program).Assembly.GetTypes().Where(t => t.Namespace != null && t.Namespace.Contains("Features"));
+            foreach(var intfc in types.Where(t => t.IsInterface))
+            {
+                var impl = types.FirstOrDefault(c => c.IsClass && intfc.IsAssignableFrom(c) && !c.IsAbstract);
+                if (impl != null) services.AddScoped(intfc, impl);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

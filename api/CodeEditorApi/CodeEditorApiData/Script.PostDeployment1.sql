@@ -14,5 +14,7 @@ INSERT INTO Courses (Name) VALUES ('Course1');
 INSERT INTO Courses (Name) VALUES ('Course2');
 INSERT INTO Courses (Name) VALUES ('Course3');
 
-
+INSERT INTO cfg_Roles (Role) VALUES ("Admin"), ("Teacher"), ("Student");
+INSERT INTO cfg_difficulty_level (Difficulty) VALUES ("Easy"), ("Medium"), ("Hard");
+INSERT INTO cfg_programming_languages (Language) VALUES ("CSS"), ("C#"), ("HTML"), ("Java"), ("JavaScript"), ("Python");
 
