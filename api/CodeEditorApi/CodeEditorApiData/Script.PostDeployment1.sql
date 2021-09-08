@@ -10,11 +10,13 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-INSERT INTO Courses (Name) VALUES ('Course1');
-INSERT INTO Courses (Name) VALUES ('Course2');
-INSERT INTO Courses (Name) VALUES ('Course3');
-
-INSERT INTO cfg_Roles (Role) VALUES ("Admin"), ("Teacher"), ("Student");
-INSERT INTO cfg_difficulty_level (Difficulty) VALUES ("Easy"), ("Medium"), ("Hard");
-INSERT INTO cfg_programming_languages (Language) VALUES ("CSS"), ("C#"), ("HTML"), ("Java"), ("JavaScript"), ("Python");
-
+BEGIN
+    BEGIN TRY
+        INSERT INTO cfgRoles (Id, Role) VALUES (1, 'Admin'), (2, 'Teacher'), (3, 'Student');
+        INSERT INTO cfgDifficultyLevel (Id, Difficulty) VALUES (1, 'Easy'), (2, 'Medium'), (3, 'Hard');
+        INSERT INTO cfgProgrammingLanguages(Id, Language) VALUES (1, 'CSS'), (2, 'C#'), (3, 'HTML'), (4, 'Java'), (5, 'JavaScript'), (6, 'Python');
+    END TRY
+    BEGIN CATCH
+    END CATCH
+END;
+GO

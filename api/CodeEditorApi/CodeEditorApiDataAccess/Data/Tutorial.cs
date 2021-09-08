@@ -5,23 +5,19 @@ using System.Collections.Generic;
 
 namespace CodeEditorApiDataAccess.Data
 {
-    public partial class Course
+    public partial class Tutorial
     {
-        public Course()
-        {
-            Tutorials = new HashSet<Tutorial>();
-        }
-
         public int Id { get; set; }
         public string Title { get; set; }
         public int Author { get; set; }
-        public string Description { get; set; }
+        public int? CourseId { get; set; }
+        public string Prompt { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime ModifyDate { get; set; }
+        public string ModifyDate { get; set; }
         public bool IsPublished { get; set; }
         public int StudentCount { get; set; }
 
         public virtual User AuthorNavigation { get; set; }
-        public virtual ICollection<Tutorial> Tutorials { get; set; }
+        public virtual Course Course { get; set; }
     }
 }
