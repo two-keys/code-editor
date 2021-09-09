@@ -6,5 +6,6 @@
 	[Hash] VARCHAR(255),
 	[AccessToken] VARCHAR(255),
 	[RoleId] INT NOT NULL, 
-	CONSTRAINT [FK_User_cfgRoles] FOREIGN KEY ([RoleId]) REFERENCES [cfgRoles]([Id])
+	CONSTRAINT [FK_User_cfgRoles] FOREIGN KEY ([RoleId]) REFERENCES [cfgRoles]([Id]), 
+    CONSTRAINT [AK_Email] UNIQUE ([Email])
 )
