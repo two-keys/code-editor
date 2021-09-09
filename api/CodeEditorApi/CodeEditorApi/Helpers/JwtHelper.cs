@@ -1,4 +1,5 @@
 ﻿using CodeEditorApiDataAccess.Data;
+using CodeEditorApiDataAccess.StaticData;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,13 +10,14 @@ namespace CodeEditorApi.Helpers
 {
     public static class JwtHelper
     {
-        public static string GenerateToken(string secret, User user)
+        public static string GenerateToken(string secret, string issuer, string audience, User user)
         {
             
             var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, Enum.GetName(Roles.Student))
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
@@ -23,6 +25,8 @@ namespace CodeEditorApi.Helpers
 
             var token = new JwtSecurityToken(
                 expires: DateTime.UtcNow.AddDays(2),
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 signingCredentials: creds);
 

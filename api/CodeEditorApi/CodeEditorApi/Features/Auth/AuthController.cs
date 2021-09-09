@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace CodeEditorApi.Features.Auth
 {
     [Produces("application/json")]
-    [AllowAnonymous]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -39,8 +39,11 @@ namespace CodeEditorApi.Features.Auth
 
             if(user != null)
             {
-                var key = _configuration["Jwt:Key"];
-                var token = JwtHelper.GenerateToken(_configuration["Jwt:Key"], user);
+                var token = JwtHelper.GenerateToken(
+                    _configuration["Jwt:Key"],
+                    _configuration["Jwt:Issuer"],
+                    _configuration["Jwt:Audience"],
+                    user);
                 return token;
             }
 

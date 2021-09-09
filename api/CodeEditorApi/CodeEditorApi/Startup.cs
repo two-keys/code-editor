@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -46,7 +47,12 @@ namespace CodeEditorApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            
+            // Remove microsoft's strange mapping from normal JWT to microsoft claimTypes
+            // See: https://stackoverflow.com/a/55740879
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+
+
             services.AddDbContext<CodeEditorApiContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -68,12 +74,16 @@ namespace CodeEditorApi
                 auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
+                options.SaveToken = true;
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["Jwt:Audience"],
                     ValidateIssuerSigningKey = true,
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
