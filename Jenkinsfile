@@ -9,6 +9,7 @@ pipeline {
         stage('Build UI') {
           steps {
             dir('app') {
+              sh 'ls'
               sh 'npm install'
               sh 'npm run build'
               sh 'npm start'
