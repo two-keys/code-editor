@@ -10,7 +10,7 @@ pipeline {
         stage('Install dependencies') {
           steps {
             dir('app') {
-              sh 'npm install --production'
+              sh 'npm install'
             }
           }
         }
