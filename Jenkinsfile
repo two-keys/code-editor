@@ -21,6 +21,16 @@ pipeline {
             }
           }
         }
+        when {
+          branch 'main'
+        }
+        stage('Build Image') {
+          steps {
+            dir('app') {
+              sh 'docker build -t code-editorv1'
+            }
+          }
+        }
       }
     }
   }
