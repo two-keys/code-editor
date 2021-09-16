@@ -2,7 +2,7 @@
 pipeline {
   agent none
   stages {
-    stage('Front End') {
+    stage('UI Test') {
       agent {
         docker { image 'node:14-alpine' }
       }
@@ -21,9 +21,16 @@ pipeline {
             }
           }
         }
-        when {
-          branch 'main'
-        }
+      }
+    }
+  }
+  when {
+    branch 'master'
+  }
+  stages {
+    stage('UI Deploy') {
+      agent any
+      stages {
         stage('Build Image') {
           steps {
             dir('app') {
