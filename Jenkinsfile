@@ -1,4 +1,5 @@
 /* groovylint-disable DuplicateStringLiteral, NestedBlockDepth */
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
   agent none
   stages {
@@ -23,13 +24,12 @@ pipeline {
         }
       }
     }
-  }
-  when {
-    branch 'master'
-  }
-  stages {
     stage('UI Deploy') {
       agent any
+      when {
+        beforeAgent true
+        branch 'main'
+      }
       stages {
         stage('Build Image') {
           steps {
