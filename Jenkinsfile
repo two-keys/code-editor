@@ -33,9 +33,7 @@ pipeline {
       stages {
         stage('Build Image') {
           steps {
-            dir('app') {
-              sh 'docker build -t code-editorv1'
-            }
+            sh 'docker build -t code-editorv1 app'
           }
         }
       }
