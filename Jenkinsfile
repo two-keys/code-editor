@@ -32,8 +32,10 @@ pipeline {
       }
       stages {
         stage('Build & Deploy') {
-          dir('app') {
+          steps {
+            dir('app') {
             sh 'docker-compose up'
+            }
           }
         }
       }
