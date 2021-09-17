@@ -34,7 +34,7 @@ pipeline {
         stage('Build & Deploy') {
           steps {
             dir('app') {
-            sh 'docker-compose up'
+              sh 'echo woo'
             }
           }
         }
