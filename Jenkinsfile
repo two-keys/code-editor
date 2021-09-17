@@ -31,9 +31,9 @@ pipeline {
         branch 'main'
       }
       stages {
-        stage('Build Image') {
-          steps {
-            sh 'docker build -t code-editorv1 app'
+        stage('Build & Deploy') {
+          dir('app') {
+            sh 'docker-compose up'
           }
         }
       }
