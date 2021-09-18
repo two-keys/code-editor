@@ -34,7 +34,8 @@ pipeline {
         stage('Build & Deploy') {
           steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'ssh-for-staging', keyFileVariable: 'SSH_FOR_STAGING')]) {
-              sh 'echo test'
+              sh 'ls'
+              sh 'hostname'
             }
           }
         }
