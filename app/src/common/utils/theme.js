@@ -1,4 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
+import ButtonStyle from "@Common/styles/Button.style";
+import HeadingStyle from "@Common/styles/Heading.style";
+import InputStyle from "@Common/styles/Input.style";
 
 // ce_ is prepended to differentiate from default css colors
 const colors = {
@@ -53,23 +56,16 @@ const styles = {
     "*::placeholder": {
       color: "ce_black",
     },
+    body: {
+      color: "ce_black",
+    }
   },
 }
 
 const components = {
-  Input: {
-    defaultProps: {
-      size: "xs",
-    },
-    variants: {
-      outline: {
-        field: {
-          borderColor: "ce_black",
-          borderRadius: "md",
-        },
-      },
-    },
-  },
+  Input: InputStyle,
+  Heading: HeadingStyle,
+  Button: ButtonStyle,
 }
 
 const theme = extendTheme({ colors, config, fonts, fontSizes, styles, components })
