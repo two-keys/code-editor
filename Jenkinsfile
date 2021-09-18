@@ -33,8 +33,8 @@ pipeline {
       stages {
         stage('Build & Deploy') {
           steps {
-            dir('app') {
-              sh 'echo woo'
+            withCredentials([sshUserPrivateKey(credentialsId: 'ssh-for-staging', keyFileVariable: 'SSH_FOR_STAGING')]) {
+              sh 'echo test'
             }
           }
         }
