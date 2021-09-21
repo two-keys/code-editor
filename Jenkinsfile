@@ -47,14 +47,7 @@ pipeline {
           steps {
             sshagent(['ssh-for-staging']) {
               sh 'scp code-editor-ui.tar cruizk@192.168.0.16:/home/cruizk'
-              sh '''
-                ssh cruizk@192.168.0.16 << EOF
-                docker load -i code-editor-ui.tar
-                docker stop code-editor-ui
-                docker rm code-editor-ui
-                docker run -p 3000:3000 -d --name code-editor-ui code-editor-ui
-                EOF
-                '''
+              sh 'cat scripts/deployStaging.sh | ssh cruizk@192.168.0.16 /bin/bash'
             }
           }
         }
