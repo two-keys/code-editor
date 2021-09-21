@@ -31,10 +31,26 @@ pipeline {
         branch 'main'
       }
       stages {
-        stage('Build & Deploy') {
+        stage ('Build Image') {
           steps {
-            withCredentials([sshUserPrivateKey(credentialsId: 'ssh-for-staging', keyFileVariable: 'SSH_FOR_STAGING')]) {
-              sh 'ssh -i $SSH_FOR_STAGING cruizk@192.168.0.16'
+            sh 'docker build -t code-editor-ui .'
+          }
+        }
+        stage ('Save Image') {
+          steps {
+            sh 'docker save -o code-editor-ui.tar code-editor-ui'
+          }
+        }
+        stage('Deploy') {
+          steps {
+            sshagent(['ssh-for-staging']) {
+              sh 'scp code-editor-ui.tar cruizk@192.168.0.16:/home/cruizk'
+              sh '''
+                ssh cruizk@192.168.0.16 << EOF
+                docker load -i code-editor-ui.tar
+                docker run -p 3000:3000 -d --name code-editor-ui code-editor-ui
+                EOF
+                '''
             }
           }
         }
