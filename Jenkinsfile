@@ -33,7 +33,9 @@ pipeline {
       stages {
         stage ('Build Image') {
           steps {
-            sh 'docker build -t code-editor-ui .'
+            dir('app') {
+              sh 'docker build -t code-editor-ui .'
+            }
           }
         }
         stage ('Save Image') {
