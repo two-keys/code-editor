@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Api Test') {
           agent {
-            docker { image: 'mcr.microsoft.com/dotnet/core/sdk:5.0-alpine' }
+            docker { image 'mcr.microsoft.com/dotnet/core/sdk:5.0-alpine' }
           }
           stages {
             stage('Restore Dependencies') {
@@ -81,7 +81,6 @@ pipeline {
             }
           }
         }
-
       }
     }
   }
