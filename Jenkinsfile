@@ -2,6 +2,9 @@
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
   agent none
+  enviornment {
+    DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+  }
   stages {
     stage('Run Tests') {
       parallel {
@@ -34,7 +37,7 @@ pipeline {
             stage('Restore Dependencies') {
               steps {
                 dir('api/CodeEditorApi') {
-                  sh 'echo lol'
+                  sh 'dotnet restore'
                 }
               }
             }
