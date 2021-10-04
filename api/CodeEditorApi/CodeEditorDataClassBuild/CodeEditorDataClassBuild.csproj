@@ -1,0 +1,10 @@
+﻿<Project Sdk="MSBuild.SDK.SqlProj/1.1.0">
+
+  <PropertyGroup>
+	<TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+	  <Content Include="..\CodeEditorApiData\**\*.sql"/>
+  </ItemGroup>
+
+</Project>

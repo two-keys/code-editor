@@ -38,7 +38,6 @@ pipeline {
               steps {
                 dir('api/CodeEditorApi') {
                   sh 'dotnet restore'
-                  sh 'dotnet new --install MSBuild.Sdk.SqlProj.Templates'
                 }
               }
             }
