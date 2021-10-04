@@ -28,18 +28,22 @@ pipeline {
         }
         stage('Api Test') {
           agent {
-            docker { image: 'mcr.microsoft.com/dotnet/core/sdk:5.0-alpine'}
+            docker { image: 'mcr.microsoft.com/dotnet/core/sdk:5.0-alpine' }
           }
           stages {
             stage('Restore Dependencies') {
-              dir('api/CodeEditorApi') {
-                sh 'dotnet restore'
+              steps {
+                dir('api/CodeEditorApi') {
+                  sh 'dotnet restore'
+                }
               }
             }
             stage('Build & Test') {
-              dir('api/CodeEditorApi') {
-                sh 'dotnet build'
-                sh 'dotnet test --logger:trx'
+              steps {
+                dir('api/CodeEditorApi') {
+                  sh 'dotnet build'
+                  sh 'dotnet test --logger:trx'
+                }
               }
             }
           }
@@ -78,7 +82,6 @@ pipeline {
           }
         }
         stage('Api Deploy') {
-
         }
       }
     }
