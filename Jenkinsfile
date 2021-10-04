@@ -34,7 +34,7 @@ pipeline {
             stage('Restore Dependencies') {
               steps {
                 dir('api/CodeEditorApi') {
-                  sh 'dotnet restore'
+                  sh 'echo lol'
                 }
               }
             }
