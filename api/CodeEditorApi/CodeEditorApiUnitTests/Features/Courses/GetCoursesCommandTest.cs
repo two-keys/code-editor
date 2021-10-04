@@ -19,7 +19,12 @@ namespace CodeEditorApiUnitTests.Features.Courses
         public GetCoursesCommandTest()
         {
             _getCoursesMock = new Mock<IGetCourses>();
+
+            //TODO: Should be abstracted into test base class that auto does this with a protected fixture
             _fixture = new Fixture();
+            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
             _target = new GetCoursesCommand(_getCoursesMock.Object);
         }
 
