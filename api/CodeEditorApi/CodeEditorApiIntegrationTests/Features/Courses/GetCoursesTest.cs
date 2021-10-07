@@ -13,7 +13,7 @@
             using(var context = TestContext())
             {
                 // Assemble
-                var getCourses = new GetCourses(context);
+                var getCourses = new GetCourse(context);
                 var courses = _fixture.CreateMany<Course>();
                 await context.AddRangeAsync(courses);
                 await context.SaveChangesAsync();
