@@ -1,15 +1,8 @@
-﻿using AutoFixture;
-using CodeEditorApi.Features.Courses.GetCourses;
-using CodeEditorApiDataAccess.Data;
-using FluentAssertions;
-using Moq;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace CodeEditorApiUnitTests.Features.Courses
+﻿namespace CodeEditorApiUnitTests.Features.Courses
 {
     public class GetCoursesCommandTest
     {
+        /*
 
         private readonly GetCoursesCommand _target;
         private readonly Fixture _fixture;
@@ -44,5 +37,6 @@ namespace CodeEditorApiUnitTests.Features.Courses
 
             result.Should().BeEquivalentTo(expected);
         }
+        */
     }
 }
