@@ -84,7 +84,7 @@ pipeline {
             }
           }
         }
-        stage('API Deploy') {
+        stage('API & DB Deploy') {
           agent any
           when {
             beforeAgent true

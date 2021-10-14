@@ -1,9 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 
-# We only care about the actual web project
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
 COPY . ./
 
 RUN dotnet publish CodeEditorApi -c Release -o out
