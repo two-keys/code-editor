@@ -23,17 +23,34 @@
 
         }
 
-        [Fact]
-        public async Task ShouldReturnCourses()
+        [Theory]
+        [InlineData(1)]
+        public async Task ShouldReturnUserCourses(int userId)
         {
-            // Assemble
+            // Assemble            
             var expected = _fixture.CreateMany<Course>();
             
-            _getCoursesMock.Setup(x => x.ExecuteAsync())
+            _getCoursesMock.Setup(x => x.GetUserCourses(userId))
                 .ReturnsAsync(expected);
 
             // Act
-            var result = await _target.ExecuteAsync();
+            var result = await _target.ExecuteAsync(userId);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public async Task ShouldReturnUserCreatedCourses(int userId)
+        {
+            // Assemble            
+            var expected = _fixture.CreateMany<Course>();
+
+            _getCoursesMock.Setup(x => x.GetUserCreatedCourses(userId))
+                .ReturnsAsync(expected);
+
+            // Act
+            var result = await _target.ExecuteAsync(userId);
 
             result.Should().BeEquivalentTo(expected);
         }

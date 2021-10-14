@@ -23,15 +23,18 @@ namespace CodeEditorApi.Features.Courses
     /// </summary>
     public class CoursesController : ControllerBase
     {
-        private readonly IGetCourseCommand _getCourseCommand;
-        private readonly ICreateCourseCommand _createCourseCommand;
+        private readonly IGetCoursesCommand _getCoursesCommand;
+        private readonly IGetUserCreatedCoursesCommand _getUserCreatedCoursesCommand;
+        private readonly ICreateCoursesCommand _createCoursesCommand;
         private readonly IUpdateCoursesCommand _updateCoursesCommand;
         private readonly IDeleteCoursesCommand _deleteCoursesCommand;
 
-        public CoursesController(IGetCourseCommand getCourseCommand, ICreateCourseCommand createCourseCommand, IUpdateCoursesCommand updateCoursesCommand, IDeleteCoursesCommand deleteCoursesCommand)
+        public CoursesController(IGetCoursesCommand getCoursesCommand, IGetUserCreatedCoursesCommand getUserCreatedCoursesCommand,
+            ICreateCoursesCommand createCoursesCommand, IUpdateCoursesCommand updateCoursesCommand, IDeleteCoursesCommand deleteCoursesCommand)
         {
-            _getCourseCommand = getCourseCommand;
-            _createCourseCommand = createCourseCommand;
+            _getCoursesCommand = getCoursesCommand;
+            _getUserCreatedCoursesCommand = getUserCreatedCoursesCommand;
+            _createCoursesCommand = createCoursesCommand;
             _updateCoursesCommand = updateCoursesCommand;
             _deleteCoursesCommand = deleteCoursesCommand;
         }
@@ -40,14 +43,21 @@ namespace CodeEditorApi.Features.Courses
         /// Get's all courses for a single user
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetCourse")]
+        [HttpGet("GetUserCourses")]
         [Authorize]
-        public async Task<IEnumerable<Course>> GetCourses()
+        public async Task<IEnumerable<Course>> GetUserCourses()
         {
             var userId = retrieveRequestUserId();
-            return await _getCourseCommand.ExecuteAsync(userId);
+            return await _getCoursesCommand.ExecuteAsync(userId);
         }
 
+        [HttpGet("GetUserCreatedCourses")]
+        [Authorize]
+        public async Task<IEnumerable<Course>> GetUserCreatedCourses()
+        {
+            var userId = retrieveRequestUserId();
+            return await _getUserCreatedCoursesCommand.ExecuteAsync(userId);
+        }
         /// <summary>
         /// Creates a course for a user (admin/teacher role)
         /// </summary>
@@ -60,7 +70,7 @@ namespace CodeEditorApi.Features.Courses
         public async Task CreateCourse([FromBody] Course course)
         {
             var userId = retrieveRequestUserId();
-            await _createCourseCommand.ExecuteAsync(userId, course);
+            await _createCoursesCommand.ExecuteAsync(userId, course);
         }
 
         /// <summary>
@@ -84,7 +94,7 @@ namespace CodeEditorApi.Features.Courses
         /// Course for deletion
         /// </param>
         /// <returns></returns>
-        [HttpDelete("DeleteCourses")]
+        [HttpDelete("DeleteCourse")]
         [Authorize]
         public async Task DeleteCourse([FromBody] Course course)
         {
@@ -97,9 +107,9 @@ namespace CodeEditorApi.Features.Courses
             {
                 return int.Parse(userId);
             }
-            catch (System.FormatException e)
+            catch
             {
-                return -1;
+                throw new System.Exception($"User ID {userId} is invalid");
                 //TODO: catch internal error of invalid userId...this should turn into a validation on it's own though. Then call validation in this method.
             }
         }

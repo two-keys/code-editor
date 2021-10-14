@@ -21,8 +21,6 @@ namespace CodeEditorApi.Features.Courses.UpdateCourses
             _context = context;
         }
 
-        [HttpPost("Update User Course")]
-        [Authorize]
         public async Task<Course> ExecuteAsync(Course course)
         {
             var existingCourse = await _context.Courses.FindAsync(course.Id);
@@ -32,8 +30,8 @@ namespace CodeEditorApi.Features.Courses.UpdateCourses
                 existingCourse.Description = course.Description;
                 existingCourse.ModifyDate = DateTime.Now;
                 existingCourse.IsPublished = course.IsPublished;
-            }          
-
+            }
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return existingCourse;
         }
     }

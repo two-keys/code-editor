@@ -22,12 +22,14 @@ namespace CodeEditorApi.Features.Courses.DeleteCourses
             _context = context;
         }
 
-        [HttpPost("Delete User Course")]
-        [Authorize]
         public async Task<Course> ExecuteAsync(Course course)
         {
             var existingCourse = await _context.Courses.FindAsync(course.Id);
-            if(existingCourse != null) _context.Courses.Remove(existingCourse);
+            if (existingCourse != null)
+            {
+                _context.Courses.Remove(existingCourse);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
             return existingCourse;
         }
     }
