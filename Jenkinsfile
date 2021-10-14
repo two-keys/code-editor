@@ -88,7 +88,7 @@ pipeline {
           agent any
           when {
             beforeAgent true
-            branch 'main'
+            branch 'maintest'
           }
           stages {
             stage ('Build Image') {
