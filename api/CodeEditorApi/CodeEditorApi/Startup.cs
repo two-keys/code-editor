@@ -116,15 +116,32 @@ namespace CodeEditorApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            if(env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("swagger/v1/swagger.json", "Code Editor API V1");
+                    c.RoutePrefix = "api/swagger";
+                });
+            }
+            else
+            {
+                app.UseSwagger(c =>
+                {
+                    c.RouteTemplate = "{documentName}/swagger.json";
+                });
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("api/v1/swagger.json", "Code Editor API V1");
+                    c.RoutePrefix = "api/swagger";
+                });
+            }
+            
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Editor API V1");
-                c.RoutePrefix = "api/swagger";
-            });
+
 
             
 
