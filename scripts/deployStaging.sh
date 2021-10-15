@@ -6,7 +6,7 @@ docker run -p 3000:3000 -d --restart unless-stopped  --name code-editor-ui code-
 
 # Deploy db
 docker load -i code-editor-db.tar
-docker ps -a
+docker ps -a 
 docker run --rm --name code-editor-db --network="host" code-editor-db
 docker ps -a
 
