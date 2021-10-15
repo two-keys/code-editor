@@ -1,6 +1,8 @@
 # Deploy db
 docker load -i code-editor-db.tar
+docker ps -a
 docker run --rm --name code-editor-db --network="host" code-editor-db
+docker ps -a
 
 # Deploy api
 docker load -i code-editor-api.tar
