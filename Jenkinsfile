@@ -54,100 +54,55 @@ pipeline {
       }
     }
     stage('Deployment') {
-      parallel {
-        stage('UI Deploy') {
-          agent any
-          when {
-            beforeAgent true
-            branch 'main'
-          }
-          stages {
-            stage ('Build Image') {
+      agent any
+      when {
+        beforeAgent true
+        branch 'main'
+      }
+      stages {
+        stage('Docker Image Building') {
+          parallel {
+            failfast true
+            stage('Build & Send UI Image') {
               steps {
                 dir('app') {
                   sh 'docker build -t code-editor-ui .'
+                  sh 'docker save -o code-editor-ui.tar code-editor-ui'
+                  sshagent(['ssh-for-staging']) {
+                    sh 'scp code-editor-ui.tar cruizk@192.168.0.16:/home/cruizk'
+                  }
                 }
               }
             }
-            stage ('Save Image') {
+            stage('Build & Send Api Image') {
               steps {
-                sh 'docker save -o code-editor-ui.tar code-editor-ui'
+
+                dir('api') {
+                  sh 'docker build -f Dockerfile.web -t code-editor-api .'
+                  sh 'docker save -o code-editor-api.tar code-editor-api'
+                  sshagent(['ssh-for-staging']) {
+                    sh 'scp code-editor-api.tar cruizk@192.168.0.16:/home/cruizk'
+                  }
+                }
               }
             }
-            stage('Deploy') {
+            stage('Build & Send Db Image') {
               steps {
-                sshagent(['ssh-for-staging']) {
-                  sh 'scp code-editor-ui.tar cruizk@192.168.0.16:/home/cruizk'
-                  sh 'cat scripts/deployStagingUI.sh | ssh cruizk@192.168.0.16 /bin/bash'
+                dir('api') {
+                  sh 'docker build -f Dockerfile.db -t code-editor-db .'
+                  sh 'docker save -o code-editor-db.tar code-editor-db'
+                  sshagent(['ssh-for-staging']) {
+                    sh 'scp code-editor-db.tar cruizk@192.168.0.16:/home/cruizk'
+                  }
                 }
               }
             }
           }
         }
-        stage('API & DB Deploy') {
-          agent any
-          when {
-            beforeAgent true
-            branch 'main'
-          }
-          stages {
-            stage('Docker Image Building') {
-              parallel {
-                stage('Api') {
-                  stages {
-                    stage ('Build Api Image') {
-                      steps {
-                        dir('api') {
-                          sh 'docker build -f Dockerfile.web -t code-editor-api .'
-                        }
-                      }
-                    }
-                    stage('Save Api Image') {
-                      steps {
-                        sh 'docker save -o code-editor-api.tar code-editor-api'
-                      }
-                    }
-                    stage('Transfer Api Image') {
-                      steps {
-                        sshagent(['ssh-for-staging']) {
-                          sh 'scp code-editor-api.tar cruizk@192.168.0.16:/home/cruizk'
-                          sh 'cat scripts/deployStagingApi.sh | ssh cruizk@192.168.0.16 /bin/bash'
-                        }
-                      }
-                    }
-                  }
-                }
-                stage('DB') {
-                  stages {
-                    stage ('Build DB Image') {
-                      steps {
-                        dir('api') {
-                          sh 'docker build -f Dockerfile.db -t code-editor-db .'
-                        }
-                      }
-                    }
-                    stage('Save Db Image') {
-                      steps {
-                        sh 'docker save -o code-editor-db.tar code-editor-api'
-                      }
-                    }
-                    stage('Transfer DB Image') {
-                      steps {
-                        sshagent(['ssh-for-staging']) {
-                          sh 'scp code-editor-db.tar cruizk@192.168.0.16:/home/cruizk'
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            stage('Deploy') {
-              steps {
-                sshagent(['ssh-for-staging']) {
-                  sh 'cat scripts/deployStagingApi.sh | ssh cruizk@192.168.0.16 /bin/bash'
-                }
-              }
+        stage('Deploy') {
+          steps {
+            sshagent(['ssh-for-staging']) {
+              sh 'cat scripts/deployStaging.sh | ssh cruizk@192.168.0.16 /bin/bash'
             }
           }
         }
