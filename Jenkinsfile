@@ -62,7 +62,7 @@ pipeline {
       stages {
         stage('Docker Image Building') {
           parallel {
-            failfast true
+            failFast true
             stage('Build & Send UI Image') {
               steps {
                 dir('app') {
