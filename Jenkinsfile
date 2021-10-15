@@ -3,7 +3,7 @@
 pipeline {
   agent none
   environment {
-    DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+    DOTNET_CLI_HOME = '/tmp/DOTNET_CLI_HOME'
   }
   stages {
     stage('Run Tests') {
@@ -91,25 +91,60 @@ pipeline {
             branch 'main'
           }
           stages {
-            stage ('Build Image') {
-              steps {
-                dir('api') {
-                  sh 'docker build -f Dockerfile.web -t code-editor-api .'
-                  sh 'docker build -f Dockerfile.db -t code-editor-db .'
+            stage('Docker Image Building') {
+              parallel {
+                stage('Api') {
+                  stages {
+                    stage ('Build Api Image') {
+                      steps {
+                        dir('api') {
+                          sh 'docker build -f Dockerfile.web -t code-editor-api .'
+                        }
+                      }
+                    }
+                    stage('Save Api Image') {
+                      steps {
+                        sh 'docker save -o code-editor-api.tar code-editor-api'
+                      }
+                    }
+                    stage('Transfer Api Image') {
+                      steps {
+                        sshagent(['ssh-for-staging']) {
+                          sh 'scp code-editor-api.tar cruizk@192.168.0.16:/home/cruizk'
+                          sh 'cat scripts/deployStagingApi.sh | ssh cruizk@192.168.0.16 /bin/bash'
+                        }
+                      }
+                    }
+                  }
                 }
-              }
-            }
-            stage('Save Image') {
-              steps {
-                sh 'docker save -o code-editor-api.tar code-editor-api'
-                sh 'docker save -o code-editor-db.tar code-editor-db'
+                stage('DB') {
+                  stages {
+                    stage ('Build DB Image') {
+                      steps {
+                        dir('api') {
+                          sh 'docker build -f Dockerfile.db -t code-editor-db .'
+                        }
+                      }
+                    }
+                    stage('Save Db Image') {
+                      steps {
+                        sh 'docker save -o code-editor-db.tar code-editor-api'
+                      }
+                    }
+                    stage('Transfer DB Image') {
+                      steps {
+                        sshagent(['ssh-for-staging']) {
+                          sh 'scp code-editor-db.tar cruizk@192.168.0.16:/home/cruizk'
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
             stage('Deploy') {
               steps {
                 sshagent(['ssh-for-staging']) {
-                  sh 'scp code-editor-api.tar cruizk@192.168.0.16:/home/cruizk'
-                  sh 'scp code-editor-db.tar cruizk@192.168.0.16:/home/cruizk'
                   sh 'cat scripts/deployStagingApi.sh | ssh cruizk@192.168.0.16 /bin/bash'
                 }
               }
