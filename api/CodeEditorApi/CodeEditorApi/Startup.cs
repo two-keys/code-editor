@@ -121,7 +121,7 @@ namespace CodeEditorApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("swagger/v1/swagger.json", "Code Editor API V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Editor API V1");
                     c.RoutePrefix = "api/swagger";
                 });
             }
@@ -133,7 +133,7 @@ namespace CodeEditorApi
                 });
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("api/v1/swagger.json", "Code Editor API V1");
+                    c.SwaggerEndpoint("/api/v1/swagger.json", "Code Editor API V1");
                     c.RoutePrefix = "api/swagger";
                 });
             }
