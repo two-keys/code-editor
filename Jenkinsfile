@@ -59,10 +59,10 @@ pipeline {
         beforeAgent true
         branch 'main'
       }
+      failFast true
       stages {
         stage('Docker Image Building') {
           parallel {
-            failFast true
             stage('Build & Send UI Image') {
               steps {
                 dir('app') {
