@@ -11,7 +11,8 @@ import Router from 'next/router';
 import { getRole } from "@Utils/jwt";
 import TutorialForm from "@Modules/Tutorials/components/TutorialForm/TutorialForm";
 import instance from "@Utils/instance";
-import { createTutorial } from "@Modules/Tutorials/Tutorials";
+import { createTutorial, updateTutorial } from "@Modules/Tutorials/Tutorials";
+import { useTutorialSession } from "@Utils/storage";
 
 export async function getServerSideProps(context) {
   var data = [];
@@ -45,13 +46,15 @@ export async function getServerSideProps(context) {
   }
 }
 
-function NewTutorial(props) {
+function EditTutorial(props) {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const isLoggedIn = loggedIn(cookies.user);
   const token = cookies.user;
 
+  const defaultValues = useTutorialSession();
+
   async function handleSubmit(isPublished, token) {
-    let success = await createTutorial(isPublished, token);
+    let success = await updateTutorial(isPublished, token);
     if (success) {
       const userRole = (isLoggedIn) ? getRole(cookies.user) : "None";
       let redirect = '/dashboard/' + ((userRole == "Student") ? '' : (userRole.toLowerCase())); 
@@ -74,10 +77,10 @@ function NewTutorial(props) {
             Publish
           </Button>
           </SectionHeader>
-          <TutorialForm courses={props.courses} />
+          <TutorialForm courses={props.courses} defaultValues={defaultValues} />
         </Grid>
       </Main>
   );
 }
 
-export default NewTutorial;
+export default EditTutorial;
