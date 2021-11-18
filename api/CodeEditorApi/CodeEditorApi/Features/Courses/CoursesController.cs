@@ -26,6 +26,8 @@ namespace CodeEditorApi.Features.Courses
         private readonly IDeleteCoursesCommand _deleteCoursesCommand;
         private readonly IRegisterUserCommand _registerUserCommand;
         private readonly IUnregisterUserCommand _unregisterUserCommand;
+        private readonly IGetCourseDetailsCommand _getCourseDetailsCommand;
+        private readonly IGetAllPublishedCoursesCommand _getAllPublishedCoursesCommand;
 
         public CoursesController(
             IGetCoursesCommand getCoursesCommand, 
@@ -34,7 +36,9 @@ namespace CodeEditorApi.Features.Courses
             IUpdateCoursesCommand updateCoursesCommand, 
             IDeleteCoursesCommand deleteCoursesCommand,
             IRegisterUserCommand registerUserCommand,
-            IUnregisterUserCommand unregisterUserCommand)
+            IUnregisterUserCommand unregisterUserCommand,
+            IGetCourseDetailsCommand getCourseDetailsCommand,
+            IGetAllPublishedCoursesCommand getAllPublishedCoursesCommand)
         {
             _getCoursesCommand = getCoursesCommand;
             _getUserCreatedCoursesCommand = getUserCreatedCoursesCommand;
@@ -43,6 +47,8 @@ namespace CodeEditorApi.Features.Courses
             _deleteCoursesCommand = deleteCoursesCommand;
             _registerUserCommand = registerUserCommand;
             _unregisterUserCommand = unregisterUserCommand;
+            _getCourseDetailsCommand = getCourseDetailsCommand;
+            _getAllPublishedCoursesCommand = getAllPublishedCoursesCommand;
         }
 
         /// <summary>
@@ -57,13 +63,28 @@ namespace CodeEditorApi.Features.Courses
             return await _getCoursesCommand.ExecuteAsync(userId);
         }
 
-        [HttpGet("Created")]
+        [HttpGet("GetUserCreatedCourses")]
         [Authorize]
         public async Task<ActionResult<List<Course>>> GetUserCreatedCourses()
         {
             var userId = HttpContextHelper.retrieveRequestUserId(HttpContext);
             return await _getUserCreatedCoursesCommand.ExecuteAsync(userId);
         }
+
+        [HttpGet("GetCourseDetails/{courseId:int}")]
+        [Authorize]
+        public async Task<ActionResult<Course>> GetCourseDetails(int courseId)
+        {
+            return await _getCourseDetailsCommand.ExecuteAsync(courseId);
+        }
+
+        [HttpGet("GetAllPublishedCourses")]
+        [Authorize]
+        public async Task<ActionResult<List<Course>>> GetAllPublishedCourses()
+        {
+            return await _getAllPublishedCoursesCommand.ExecuteAsync();
+        }
+
         /// <summary>
         /// Creates a course for a user (admin/teacher role)
         /// </summary>
