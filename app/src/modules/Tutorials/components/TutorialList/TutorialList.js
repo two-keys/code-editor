@@ -5,22 +5,25 @@ import instance from "@Utils/instance";
 import { useCookies } from "react-cookie";
 import { loggedIn } from "@Modules/Auth/Auth";
 import { useEffect, useState } from "react";
-import { deleteTutorial } from "@Modules/Tutorials/Tutorials";
+import { deleteTutorial, getTutorialsFromCourse } from "@Modules/Tutorials/Tutorials";
 import Router from "next/router";
+import { Button } from "@chakra-ui/react";
 
 function TutorialItem(props) {
     const { token } = props;
     const { id, title } = props.data;
     const tags = [];
-    if (props.Difficulty) {
+    if (props.data.difficulty) {
+        var difficultyObject = props.data.difficulty;
         tags.push({
-            name: props.Difficulty,
+            name: difficultyObject.difficulty,
             type: 'difficulties',
         });
     }
-    if (props.Language) {
+    if (props.data.language) {
+        var languageObject = props.data.language;
         tags.push({
-            name: props.Language,
+            name: languageObject.language,
             type: 'languages',
         });
     }
@@ -49,6 +52,7 @@ function TutorialItem(props) {
                 </HStack>
             </GridItem>
             <GridItem colStart={6}>
+                {props.editable && 
                 <HStack spacing={3}>            
                     <ViewIcon onClick={() => {
                         let redirect = '/tutorials/' + id; 
@@ -60,6 +64,14 @@ function TutorialItem(props) {
                     }} />
                     <DeleteIcon onClick={() => handleDeletion(id, token)} />
                 </HStack>
+                }
+                {!props.editable &&
+                <HStack spacing={3}>            
+                    <Button variant="white">
+                        Start
+                    </Button>
+                </HStack>
+                }
             </GridItem>
             <GridItem colSpan={6}>
                 <Center>
@@ -74,35 +86,27 @@ function TutorialItem(props) {
  * Handles displaying an accordion list of courses.
  */
 function TutorialList(props) {
-    const [tutorials, setTutorials] = useState([]);
-    const { courseId, getTutorials } = props;
+    const [tutorials, setTutorials] = useState(props.tutorials || []);
+    const { courseId, getTutorials, editable } = props;
     const headers = {};
 
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const isLoggedIn = loggedIn(cookies.user);
     const token = cookies.user;
 
-    if (isLoggedIn) {
-        headers["Authorization"] = "Bearer " + token;
-    }
-
     useEffect(async function() {
-        try {       
-            let response = await instance.get("/Tutorials/CourseTutorials/" + courseId, {
-                headers: {...headers},
-            });
-            if (response.statusText == "OK")
-            setTutorials(response.data);
-        } catch (error) {
-            //TODO: Error handling.
-            //console.log(error.response);
+        if (getTutorials) {
+            let success = await getTutorialsFromCourse(courseId, token);
+            if (success) {
+                setTutorials(success);
+            }
         }
     }, [getTutorials]);
 
     return(
         <>
             {tutorials.map((tutorialData, index) => {
-                return <TutorialItem key={index} data={tutorialData} token={token} />
+                return <TutorialItem key={index} data={tutorialData} token={token} editable={editable} />
             })}            
         </>
     )
