@@ -26,6 +26,7 @@ namespace CodeEditorApi.Features.Courses
         private readonly IUnregisterUserCommand _unregisterUserCommand;
         private readonly IGetCourseDetailsCommand _getCourseDetailsCommand;
         private readonly IGetAllPublishedCoursesCommand _getAllPublishedCoursesCommand;
+        private readonly IGetMostPopularCoursesCommand _getMostPopularCoursesCommand;
 
         public CoursesController(
             IGetCoursesCommand getCoursesCommand, 
@@ -36,7 +37,8 @@ namespace CodeEditorApi.Features.Courses
             IRegisterUserCommand registerUserCommand,
             IUnregisterUserCommand unregisterUserCommand,
             IGetCourseDetailsCommand getCourseDetailsCommand,
-            IGetAllPublishedCoursesCommand getAllPublishedCoursesCommand)
+            IGetAllPublishedCoursesCommand getAllPublishedCoursesCommand,
+            IGetMostPopularCoursesCommand getMostPopularCoursesCommand)
         {
             _getCoursesCommand = getCoursesCommand;
             _getUserCreatedCoursesCommand = getUserCreatedCoursesCommand;
@@ -47,6 +49,7 @@ namespace CodeEditorApi.Features.Courses
             _unregisterUserCommand = unregisterUserCommand;
             _getCourseDetailsCommand = getCourseDetailsCommand;
             _getAllPublishedCoursesCommand = getAllPublishedCoursesCommand;
+            _getMostPopularCoursesCommand = getMostPopularCoursesCommand;
         }
 
         /// <summary>
@@ -105,6 +108,17 @@ namespace CodeEditorApi.Features.Courses
         public async Task<ActionResult<List<Course>>> GetAllPublishedCoursesSortByModifyDate()
         {
             return await _getAllPublishedCoursesCommand.GetAllPublishedCoursesSortByModifyDate();
+        }
+
+        /// <summary>
+        /// Gets the top most popular courses
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetMostPopularCourses")]
+        [Authorize]
+        public async Task<ActionResult<List<int>>> GetMostPopularCourses()
+        {
+            return await _getMostPopularCoursesCommand.ExecuteAsync();
         }
 
         /// <summary>

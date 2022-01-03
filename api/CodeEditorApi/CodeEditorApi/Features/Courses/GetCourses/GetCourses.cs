@@ -1,6 +1,5 @@
 ﻿using CodeEditorApiDataAccess.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +18,8 @@ namespace CodeEditorApi.Features.Courses.GetCourses
         public Task<List<Course>> GetAllPublishedCourses();
 
         public Task<List<Course>> GetAllPublishedCoursesSortByModifyDate();
+
+        public Task<List<int>> GetMostPopularCourses();
     }
     public class GetCourses : IGetCourses
     {
@@ -44,14 +45,7 @@ namespace CodeEditorApi.Features.Courses.GetCourses
 
         public async Task<Course> GetCourseDetails(int courseId)
         {
-            var course = await _context.Courses
-                .Where(c => c.Id.Equals(courseId))
-                .Include(c => c.Tutorials) // the 'include' loads all tutorials related to the course
-                    .ThenInclude(t => t.Difficulty) // the 'theninclude' then loads the difficulty of a given tutorial as well as all tutorials under that difficulty that have ALREADY been loaded
-                .Include(c => c.Tutorials)
-                    .ThenInclude(t => t.Language)
-                .FirstOrDefaultAsync();
-            return course;
+            return await _context.Courses.FindAsync(courseId);
         }
 
         public async Task<List<Course>> GetAllPublishedCourses()
@@ -76,6 +70,22 @@ namespace CodeEditorApi.Features.Courses.GetCourses
                     Title = c.Title,
                     Author = c.Author
                 }).ToListAsync();
+        }
+
+        public async Task<List<int>> GetMostPopularCourses()
+        {
+            int top = 3;            
+
+            var result = await _context.UserRegisteredCourses
+                .GroupBy(c => c.CourseId)
+                .OrderByDescending(c => c.Count())
+                .ThenBy(c => c.Key)
+                .Select(c => c.Key).ToListAsync();
+
+            var mostPopularCourseIds = result.Take(top).ToList();
+
+            return mostPopularCourseIds;
+
         }
     }
 }
