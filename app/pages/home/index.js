@@ -4,46 +4,36 @@ import Main from "@Components/Main/Main";
 import SectionHeader from "@Components/SectionHeader/SectionHeader";
 import SNoLink from "@Components/SNoLink/SNoLink";
 import { loggedIn } from "@Modules/Auth/Auth";
-import instance from "@Utils/instance";
+import { getAllPublishedCoursesSortByModifyDate, getMostPopularCourses } from "@Modules/Courses/Courses";
 
 export async function getServerSideProps(context) {
-  var data = [];
-
   const cookies = context.req.cookies;
   const isLoggedIn = loggedIn(cookies.user);
-  const headers = {};
+  let token = cookies.user;
 
-  if (isLoggedIn) {
-    let token = cookies.user;
-    headers["Authorization"] = "Bearer " + token;
-  }
+  let mostPopular = await getMostPopularCourses(token);
 
-  // eventually, we'll need to handle all the course getters separately, but for now we don't have to care about the differentiation
-  // ideally we'd shove the request logic into modules/Home/Home.js
-
-  let response = await instance.get("/Courses/GetAllPublishedCourses", {
-    headers: {...headers},
-  });
-
-  if (response.statusText == "OK")
-  data = response.data;
+  let recentlyUpdated = await getAllPublishedCoursesSortByModifyDate(token);
 
   return {
     props: {
-      courses: data,
+      mostPopular: [], //mostPopular, TODO: Change once API route is fixed.
+      recentlyUpdated: recentlyUpdated || [],
     }, // will be passed to the page component as props
   }
 }  
 
 function Home(props) {
-  const { courses } = props;
-  const carouselItems = courses || []; // default to empty array
+  const { mostPopular, recentlyUpdated } = props;
 
   return(
     <Main>
       <Center><SNoLink href="/"><img src="/siucode_logo.png" /></SNoLink></Center>
-      <SectionHeader title="ALL COURSES" />
-      <Carousel items={carouselItems} />
+      <SectionHeader title="Most Popular" />
+      <Carousel items={mostPopular} />
+
+      <SectionHeader title="Recently Updated" />
+      <Carousel items={recentlyUpdated} />
     </Main>
   );
 }
