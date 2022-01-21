@@ -10,6 +10,10 @@ on:
     paths:
     - 'api/**'
 
+defaults:
+  run:
+    working-directory: 'api/CodeEditorApi'
+
 jobs:
   build:
 
