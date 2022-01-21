@@ -10,14 +10,14 @@ on:
     paths:
     - 'api/**'
 
-defaults:
-  run:
-    working-directory: api/CodeEditorApi
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: api/CodeEditorApi
 
     steps:
     - uses: actions/checkout@v2
