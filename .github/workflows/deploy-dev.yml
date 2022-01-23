@@ -25,7 +25,9 @@ jobs:
     - name: Log Into DO Container Registry
       run: doctl registry login --expiry-seconds 600
     - name: reee
-      run: echo ${{ secrets.SSH_KEY }} ${{ secrets.HOST }} ${{ secrets.USER }}
+    - run: echo "${{ secrets.SSH_KEY }}" 
+    - run: echo "${{ secrets.HOST }}" 
+    - run: echo "${{ secrets.USER }}" 
     - name: deploy dev backend
       uses: appleboy/ssh-action@master
       with:
