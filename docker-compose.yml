@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  api:
+    image: registry.digitalocean.com/code-editor-images/code-editor-api:dev
+    ports:
+    - "80:80"
+  db:
+    image: registry.digitalocean.com/code-editor-images/code-editor-db:dev

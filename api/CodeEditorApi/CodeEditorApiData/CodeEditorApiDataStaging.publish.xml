@@ -4,7 +4,7 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseName>CodeEditorApi</TargetDatabaseName>
     <DeployScriptFileName>CodeEditorApiData.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=.;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;User Id=sa;Password=MyPassword1!</TargetConnectionString>
+    <TargetConnectionString>Data Source=10.116.0.2;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;User Id=sa;Password=&amp;52#Z3#^2D@Fv!</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
   </PropertyGroup>
 </Project>
