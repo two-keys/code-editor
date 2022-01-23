@@ -29,8 +29,8 @@ jobs:
       run: doctl registry login --expiry-seconds 600
     - name: Push images to DO container registry
       run: |
-        docker push registry.digitalocean.com/code-editor-images/code-editor-api:dev
-        docker push registry.digitalocean.com/code-editor-images/code-editor-db:dev
+        docker push ${{ API_URL }}
+        docker push ${{ DB_URL }}
     - name: deploy dev backend
       uses: appleboy/ssh-action@master
       with:
