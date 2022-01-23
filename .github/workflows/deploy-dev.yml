@@ -8,6 +8,9 @@ jobs:
     defaults:
       run:
         working-directory: api
+    env:
+      API_URL: registry.digitalocean.com/code-editor-images/code-editor-api:dev
+      DB_URL: registry.digitalocean.com/code-editor-images/code-editor-db:dev
         
     steps:
     - uses: actions/checkout@v2
@@ -15,15 +18,19 @@ jobs:
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
     - name: Builds api Image
-      run: docker build . --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:dev
+      run: docker build . --file Dockerfile.web -t ${{ env.API_URL }}
     - name: Builds DB Image
-      run: docker build . --file Dockerfile.db -t registry.digitalocean.com/code-editor-images/code-editor-db:dev
+      run: docker build . --file Dockerfile.db -t ${{ env.DB_URL }}
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
       with: 
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Log Into DO Container Registry
       run: doctl registry login --expiry-seconds 600
+    - name: Push images to DO container registry
+      run: |
+        docker push ${{ env.API_URL }}
+        docker push ${{ env.DB_URL }}
     - name: deploy dev backend
       uses: appleboy/ssh-action@master
       with:
@@ -32,11 +39,17 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           docker login registry.digitalocean.com -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          docker pull ${{ env.API_URL }}
+          docker pull ${{ env.DB_URL }}
+          docker stop code-editor-api
+          docker stop code-editor-db
+          docker rm code-editor-api
+          docker rm code-editor-db
+          docker run -d --name code-editor-api -p 80:8080 ${{ env.API_URL }}
+          docker run -d --name code-editor-db ${{ env.DB_URL }}
+          docker system prune -af
           
-#    - name: Push images to DO container registry
-#      run: |
-#        docker push registry.digitalocean.com/code-editor-images/code-editor-api:$(git rev-parse --short HEAD)
-#        docker push registry.digitalocean.com/code-editor-images/code-editor-db:$(git rev-parse --short HEAD)
+
       
 
       
