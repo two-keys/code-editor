@@ -24,8 +24,13 @@ jobs:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Log Into DO Container Registry
       run: doctl registry login --expiry-seconds 600
-    - name: SSH into dev
-      run: doctl compute ssh BackendApi
+    - name: deploy dev backend
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        key: ${{ secrets.SSH_KEY }}
+        script: ls
+
 #    - name: Push images to DO container registry
 #      run: |
 #        docker push registry.digitalocean.com/code-editor-images/code-editor-api:$(git rev-parse --short HEAD)
