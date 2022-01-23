@@ -11,6 +11,9 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
     - name: Builds api Image
       run: docker build . --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:$(git rev-parse --short HEAD)
     - name: Builds DB Image
