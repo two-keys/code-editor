@@ -45,7 +45,7 @@ jobs:
           docker stop code-editor-db
           docker rm code-editor-api
           docker rm code-editor-db
-          docker run -d --name code-editor-api -p 80:8080 ${{ env.API_URL }}
+          docker run -d --name code-editor-api -p 8080:80 ${{ env.API_URL }}
           docker run -d --name code-editor-db ${{ env.DB_URL }}
           docker system prune -af
           
