@@ -12,9 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Builds api Image
-      run: docker build . --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:$(date +%s)
+      run: docker build . --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:$(git rev-parse --short HEAD)
     - name: Builds DB Image
-      run: docker build . --file Dockerfile.db -t registry.digitalocean.com/code-editor-images/code-editor-db:$(date +%s)
+      run: docker build . --file Dockerfile.db -t registry.digitalocean.com/code-editor-images/code-editor-db:$(git rev-parse --short HEAD)
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
       with: 
@@ -23,8 +23,8 @@ jobs:
       run: doctl registry login --expiry-seconds 600
     - name: Push images to DO container registry
       run: |
-        docker push registry.digitalocean.com/code-editor-images/code-editor-api$(date +%s)
-        docker push registry.digitalocean.com/code-editor-images/code-editor-db:$(date +%s)
+        docker push registry.digitalocean.com/code-editor-images/code-editor-api$(git rev-parse --short HEAD)
+        docker push registry.digitalocean.com/code-editor-images/code-editor-db:$(git rev-parse --short HEAD)
       
 
       
