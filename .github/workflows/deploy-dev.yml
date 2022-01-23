@@ -9,9 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Builds api Image
-      run: docker build api/. --file Dockerfile.web --t registry.digitalocean.com/code-editor-images/code-editor-api:$(date +%s)
+      run: docker build api/. --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:$(date +%s)
     - name: Builds DB Image
-      run: docker build api/. --file Dockerfile.db code-editor-db --tag registry.digitalocean.com/code-editor-images/code-editor-db:$(date +%s)
+      run: docker build api/. --file Dockerfile.db -t registry.digitalocean.com/code-editor-images/code-editor-db:$(date +%s)
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
       with: 
