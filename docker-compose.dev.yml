@@ -1,8 +1,16 @@
 version: "3.9"
 services:
   api:
+    depends_on:
+      - db
+    build:
+      context: ./api
+      dockerfile: Dockerfile.web
     image: registry.digitalocean.com/code-editor-images/code-editor-api:dev
     ports:
-    - "80:80"
+    - "8080:80"
   db:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.db
     image: registry.digitalocean.com/code-editor-images/code-editor-db:dev
