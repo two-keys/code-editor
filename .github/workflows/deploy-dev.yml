@@ -37,7 +37,7 @@ jobs:
           docker login registry.digitalocean.com -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           cd code-editor
           git pull
-          docker-compose pull
+          docker-compose docker-compose.dev.yml pull
           docker-compose up docker-compose.dev.yml --detach
           docker image prune -f
           
