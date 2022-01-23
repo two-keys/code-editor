@@ -27,6 +27,10 @@ jobs:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Log Into DO Container Registry
       run: doctl registry login --expiry-seconds 600
+    - name: Push images to DO container registry
+      run: |
+        docker push registry.digitalocean.com/code-editor-images/code-editor-api:dev
+        docker push registry.digitalocean.com/code-editor-images/code-editor-db:dev
     - name: deploy dev backend
       uses: appleboy/ssh-action@master
       with:
@@ -45,10 +49,7 @@ jobs:
           docker run -d --name code-editor-db ${{ DB_URL }}
           docker system prune -af
           
-#    - name: Push images to DO container registry
-#      run: |
-#        docker push registry.digitalocean.com/code-editor-images/code-editor-api:dev
-#        docker push registry.digitalocean.com/code-editor-images/code-editor-db:dev
+
       
 
       
