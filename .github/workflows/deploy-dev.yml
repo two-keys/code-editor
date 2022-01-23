@@ -15,9 +15,9 @@ jobs:
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
     - name: Builds api Image
-      run: docker build . --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:$(git rev-parse --short HEAD)
+      run: docker build . --file Dockerfile.web -t registry.digitalocean.com/code-editor-images/code-editor-api:dev
     - name: Builds DB Image
-      run: docker build . --file Dockerfile.db -t registry.digitalocean.com/code-editor-images/code-editor-db:$(git rev-parse --short HEAD)
+      run: docker build . --file Dockerfile.db -t registry.digitalocean.com/code-editor-images/code-editor-db:dev
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
       with: 
@@ -34,7 +34,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           docker login registry.digitalocean.com -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
+          
 #    - name: Push images to DO container registry
 #      run: |
 #        docker push registry.digitalocean.com/code-editor-images/code-editor-api:$(git rev-parse --short HEAD)
