@@ -18,7 +18,7 @@ jobs:
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
     - name: Builds Images
-      run: docker compose -f docker-compose.dev.yml build
+      run: docker compose -f ../docker-compose.dev.yml build
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
       with: 
