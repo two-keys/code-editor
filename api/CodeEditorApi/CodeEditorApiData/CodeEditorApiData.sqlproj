@@ -58,8 +58,9 @@
     <Folder Include="Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeEditorApiData.publish.xml" />
-    <None Include="CodeEditorApiDataStaging.publish.xml" />
+    <None Include="CodeEditorApiDataDev.publish.xml" />
+    <None Include="CodeEditorApiDataLocal.publish.xml" />
+    <None Include="CodeEditorApiDataLocalDocker.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment1.sql" />
