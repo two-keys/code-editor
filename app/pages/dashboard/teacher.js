@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
             headers: {...headers},
         });
     } catch(e) {
-        console.error(e)
+        console.error(JSON.stringify(e))
     }
     
     if (response && response.statusText == "OK")
