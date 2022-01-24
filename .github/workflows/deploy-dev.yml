@@ -5,9 +5,6 @@ on: workflow_dispatch
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: api
     env:
       API_URL: registry.digitalocean.com/code-editor-images/code-editor-api:dev
       DB_URL: registry.digitalocean.com/code-editor-images/code-editor-db:dev
