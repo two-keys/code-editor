@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
     }
     
     if (response && response.statusText == "OK")
-    data = []
+    data = response ? response.data : []
 
     return {
       props: {
