@@ -9,6 +9,15 @@ services:
     image: registry.digitalocean.com/code-editor-images/code-editor-api:dev
     ports:
     - "8080:80"
+  goapi:
+    build:
+      context: ./go-api
+      dockerfile: Dockerfile
+    image: registry.digitalocean.com/code-editor-images/code-editor-go-api:dev
+    ports:
+    - "8081:8081"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
   db:
     build:
       context: ./api
