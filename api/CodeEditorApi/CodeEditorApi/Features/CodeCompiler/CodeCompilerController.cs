@@ -30,7 +30,7 @@ namespace CodeEditorApi.Features.Courses
         /// Adding more to comment for workflow tests
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Compile")]
+        [HttpPost("Compile")]
         [Authorize]
         public async Task<ActionResult<string>> Compile([FromBody] CompileBody compileBody)
         {

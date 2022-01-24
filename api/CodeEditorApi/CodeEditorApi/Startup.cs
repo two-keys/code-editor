@@ -57,6 +57,11 @@ namespace CodeEditorApi
                 );
             });
 
+            services.AddHttpClient("GoApi", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri("http://localhost:8081");
+            });
+
             services.AddControllers().ConfigureApiBehaviorOptions(opt =>
             {
                 opt.InvalidModelStateResponseFactory = context =>
