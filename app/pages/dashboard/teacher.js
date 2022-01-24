@@ -13,18 +13,25 @@ export async function getServerSideProps(context) {
     const cookies = context.req.cookies;
     const isLoggedIn = loggedIn(cookies.user);
     const headers = {};
-
+    let response;
+    
     if (isLoggedIn) {
         let token = cookies.user;
         headers["Authorization"] = "Bearer " + token;
     }
     
-    let response = await instance.get("/Courses/GetUserCreatedCourses", {
-        headers: {...headers},
-    });
     
-    if (response.statusText == "OK")
-    data = response.data;
+    
+    try {
+        response = await instance.get("/Courses/GetUserCreatedCourses", {
+            headers: {...headers},
+        });
+    } catch(e) {
+        console.error(e)
+    }
+    
+    if (response && response.statusText == "OK")
+    data = []
 
     return {
       props: {
