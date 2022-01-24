@@ -7,6 +7,7 @@ services:
       context: ./api
       dockerfile: Dockerfile.web
     image: registry.digitalocean.com/code-editor-images/code-editor-api:dev
+    network_mode: "host"
     ports:
     - "8080:80"
   goapi:
