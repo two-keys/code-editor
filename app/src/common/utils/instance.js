@@ -1,6 +1,10 @@
 
 import axios from "axios";
 
+
+// Remove this for production
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // Create an instance using the config defaults provided by the library
 const instance = axios.create();
 
