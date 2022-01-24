@@ -43,6 +43,18 @@ namespace CodeEditorApi
                         .AllowAnyMethod();
                     }
                 );
+
+                options.AddPolicy(name: "staging",
+                    builder =>
+                    {
+                        builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://*.vercel.app")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader()
+                            .Build();
+                    }
+                );
             });
 
             services.AddControllers().ConfigureApiBehaviorOptions(opt =>
@@ -173,6 +185,10 @@ namespace CodeEditorApi
             if (env.IsDevelopment())
             {
                 app.UseCors("dev");
+            }
+            else
+            {
+                app.UseCors("staging");
             }
 
             app.UseAuthorization();
