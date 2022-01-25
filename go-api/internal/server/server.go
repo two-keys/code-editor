@@ -7,5 +7,5 @@ func RunServer() {
 
 	r.POST("/compile", CompileHandler)
 
-	r.Run("127.0.0.1:8081")
+	r.Run("0.0.0.0:8081")
 }
