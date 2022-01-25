@@ -59,7 +59,7 @@ namespace CodeEditorApi
 
             services.AddHttpClient("GoApi", httpClient =>
             {
-                httpClient.BaseAddress = new Uri("http://go-api:8081");
+                httpClient.BaseAddress = new Uri("http://goapi:8081");
             });
 
             services.AddControllers().ConfigureApiBehaviorOptions(opt =>
