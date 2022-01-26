@@ -9,6 +9,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile.web
+      args:
+        ASPNETCORE_ENVIRONMENT: Staging
     image: registry.digitalocean.com/code-editor-images/code-editor-api:dev
     ports:
     - "8080:80"
