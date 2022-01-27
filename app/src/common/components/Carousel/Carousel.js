@@ -6,6 +6,8 @@ import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHea
 import { Tooltip } from "@chakra-ui/tooltip";
 import paletteToRGB, { getRainbowAtIteration } from "@Utils/color";
 import { useEffect, useState } from "react";
+import Router from 'next/router';
+import { useStyleConfig } from "@chakra-ui/react";
 
 /**
  * A component that allows horizontal, incremental scrolling
@@ -14,11 +16,18 @@ import { useEffect, useState } from "react";
  *  }} props
  */
 function Carousel(props) {
+    const styles = useStyleConfig("Carousel", {});
+
     const { items } = props;
     const itemsPerPage = 4;
     const [page, setPage] = useState(1);
 
     const [subsetOfItems, setSub] = useState([]);
+
+    function goToCourse(id) {
+        let redirect = `/courses/${id}`; 
+        Router.push(redirect);
+    }
 
     // this grabs the current 'page' we're on
     useEffect(() => {
@@ -60,7 +69,7 @@ function Carousel(props) {
 
                 return (
                     <Tooltip label={title} aria-label={title} placement="right" borderRadius="md">
-                        <VStack height="70px" w="122px" border={`solid ${color} 1px`} borderRadius="xl" bgColor={color} spacing={0}>
+                        <VStack __css={styles} borderColor={color} bgColor={color} spacing={0} onClick={() => goToCourse(id)}>
                             <Flex height="50%" w="100%" justifyContent="right" pr={1}>
                                 <Image src="/defaults/card_icon.png" alt="SIU Logo" height="100%" />
                             </Flex>

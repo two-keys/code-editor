@@ -8,6 +8,7 @@ import MenuStyle from "@Common/styles/Menu.style";
 import SelectStyle from "@Common/styles/Select.style";
 import TagStyle from "@Common/styles/Tag.style";
 import TextareaStyle from "@Common/styles/Textarea.style";
+import CarouselStyle from "@Common/styles/Carousel.style";
 
 // ce_ is prepended to differentiate from default css colors
 const colors = {
@@ -91,6 +92,7 @@ const components = {
   Textarea: TextareaStyle,
   Main: MainStyle,
   Select: SelectStyle,
+  Carousel: CarouselStyle,
 }
 
 const theme = extendTheme({ colors, config, fonts, fontSizes, styles, components })
