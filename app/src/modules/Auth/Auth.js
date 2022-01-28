@@ -110,10 +110,9 @@ async function login(event) {
                 name: form["name"].value,
                 email: form["email"].value,
                 password: form["password"].value,
-                admin: form["admin"].checked,
+                role: "Student", // TODO: Should be form field US-100
             })
 
-            if (response.statusText == "OK")
             token = response.data;
         } catch (error) {
             //TODO: Error handling.
