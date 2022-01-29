@@ -3,14 +3,15 @@ import Main from "@Components/Main/Main";
 import { loggedIn } from "@Modules/Auth/Auth";
 import instance from "@Utils/instance";
 import Editor from "@monaco-editor/react";
-import { Button, GridItem } from "@chakra-ui/react";
+import { Box, Button, GridItem, IconButton, HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import TutorialSideBar from "@Modules/Tutorials/TutorialSideBar/TutorialSideBar";
 import SNoLinkButton from "@Components/SNoLinkButton/SNoLinkButton";
 import Footer from "@Components/Footer/Footer";
 import Router from "next/router";
-import { updateUserTutorial } from "@Modules/Tutorials/Tutorials";
+import { compileAndRunCode, updateUserTutorial } from "@Modules/Tutorials/Tutorials";
 import { useCookies } from "react-cookie";
+import { RepeatIcon } from "@chakra-ui/icons";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -64,7 +65,18 @@ function Tutorial(props) {
       let redirect = `/courses/${courseId}`;
       Router.push(redirect);
     }
-  } 
+  }
+
+  /**
+   * Sends code to compile to the server, setting inProgress and isComplete as necessary. 
+   */
+  async function runCode(event) {
+    let success = await compileAndRunCode(id, token, 'CSharp', editorText);
+    if (success) {
+      let redirect = `/courses/${courseId}`;
+      Router.push(redirect);
+    }
+  }
 
   return(
     <Main width="100%" margin="0" maxWidth="100%">
@@ -73,13 +85,19 @@ function Tutorial(props) {
           <TutorialSideBar prompt={prompt} />
         </GridItem>
         <GridItem>
-          <Editor
-            height="100%"
-            width="100%"
-            defaultLanguage="javascript" theme="vs-dark"
-            defaultValue={editorText}
-            onChange={(value, event) => { setText(value) }}
-          />
+          <Box height="100%">  
+            <Editor
+              height="90%"
+              width="100%"
+              defaultLanguage="javascript" theme="vs-dark"
+              defaultValue={editorText}
+              onChange={(value, event) => { setText(value) }}
+            />
+            <HStack height="10%" bgColor="#323232" spacing="35px" justifyContent="start" pl={15}>
+              <RepeatIcon color="ce_white" boxSize="2em" onClick={runCode} />
+              <Button variant="black" onClick={runCode}>Run</Button>
+            </HStack>
+          </Box>
         </GridItem>
         <GridItem width="100%">
           <iframe srcDoc={
