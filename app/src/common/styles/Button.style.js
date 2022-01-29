@@ -36,6 +36,19 @@ const ButtonStyle = {
                 borderColor: "ce_black",
             }
         },
+        yellow: {
+            color: "ce_white",
+            backgroundColor: "ce_yellow",
+            _hover: {
+                color: "ce_yellow",
+                borderColor: "ce_yellow",
+            }
+        },
+        yellowOutline: {
+            color: "ce_yellow",
+            border: "1px solid",
+            borderColor: "ce_yellow"
+        }
     },
     // The default variant value
     defaultProps: {
