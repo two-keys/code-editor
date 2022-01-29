@@ -153,6 +153,38 @@ async function createTutorial(isPublished, token, prompt) {
 }
 
 /**
+ * A function that sends data to the server for updating a user's progress in a tutorial.
+ * Validation should be done server-side.
+ * @param {integer} id Course id
+ * @param {string} token JWT token.
+ * @param {boolean} inProgress Is the tutorial in progress?
+ * @param {boolean} isCompleted Is the tutorial completed?
+ * @returns {boolean} Whether or not the update succeeded.
+ */
+async function updateUserTutorial(id, token, inProgress, isCompleted) {
+    const headers = {};
+
+    if (typeof token != 'undefined') {
+        headers["Authorization"] = "Bearer " + token;
+    }
+
+    try {
+        let response = await instance.put("/Tutorials/UpdateUserTutorial/" + id, {
+            inProgress: inProgress,
+            isCompleted: isCompleted,
+        }, {
+            headers: {...headers},
+        });
+
+        return true;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return false;
+}
+
+/**
  * A function that deletes a tutorial.
  * @param {integer} id 
  * @param {string} token JWT token.
@@ -183,4 +215,4 @@ async function createTutorial(isPublished, token, prompt) {
     return false;
 }
 
-export { getTutorialsFromCourse, getUserTutorialsDetailsFromCourse, createTutorial, updateTutorial, deleteTutorial }
+export { getTutorialsFromCourse, getUserTutorialsDetailsFromCourse, createTutorial, updateTutorial, updateUserTutorial, deleteTutorial }
