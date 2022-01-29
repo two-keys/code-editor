@@ -3,13 +3,11 @@ import Main from "@Components/Main/Main";
 import { loggedIn } from "@Modules/Auth/Auth";
 import instance from "@Utils/instance";
 import Editor from "@monaco-editor/react";
-import { GridItem } from "@chakra-ui/react";
+import { Button, GridItem } from "@chakra-ui/react";
 import { useState } from "react";
-import dynamic from 'next/dynamic'; 
-const MarkdownRenderer = dynamic(
-  () => import("@Modules/Tutorials/components/MarkdownRenderer/MarkdownRenderer"),
-  { ssr: false }
-);
+import TutorialSideBar from "@Modules/Tutorials/TutorialSideBar/TutorialSideBar";
+import SNoLinkButton from "@Components/SNoLinkButton/SNoLinkButton";
+import Footer from "@Components/Footer/Footer";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -46,23 +44,21 @@ export async function getServerSideProps(context) {
 }
 
 function Tutorial(props) {
-  const { prompt } = props.values;
+  const { prompt, courseId } = props.values;
 
   const [editorText, setText] = useState("<button onClick=\"document.getElementById('demo').innerHTML = \n\t'Change me!'\"\n>\n\tClick Me!\n</button>\n");
 
   return(
     <Main width="100%" margin="0" maxWidth="100%">
-      <Grid templateColumns="repeat(3, 33%)" width="100%" height="450px">
+      <Grid templateColumns="6% 50% 44%" width="100%" height="450px">
         <GridItem>
-          <MarkdownRenderer>
-            {prompt}
-          </MarkdownRenderer>
+          <TutorialSideBar prompt={prompt} />
         </GridItem>
         <GridItem>
           <Editor
             height="100%"
             width="100%"
-            defaultLanguage="javascript"
+            defaultLanguage="javascript" theme="vs-dark"
             defaultValue={editorText}
             onChange={(value, event) => { setText(value) }}
           />
@@ -73,6 +69,14 @@ function Tutorial(props) {
           } />
         </GridItem>
       </Grid>
+      <Footer>
+        <SNoLinkButton href={`/courses/${courseId}`} variant="yellowOutline">
+          Exit
+        </SNoLinkButton>
+        <Button variant="yellow">
+          Save Progress
+        </Button>
+      </Footer>
     </Main>
   );
 } 
