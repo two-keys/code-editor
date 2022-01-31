@@ -1,5 +1,6 @@
 using CodeEditorApi.Errors;
 using CodeEditorApi.Helpers;
+using CodeEditorApi.Services;
 using CodeEditorApiDataAccess.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,7 @@ namespace CodeEditorApi
                     builder =>
                     {
                         builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                            .WithOrigins("https://*.vercel.app", "https://*.siucode.io")
+                            .WithOrigins("https://*.vercel.app", "https://*.dev.siucode.io")
                             .AllowAnyMethod()
                             .AllowCredentials()
                             .AllowAnyHeader()
@@ -145,7 +146,7 @@ namespace CodeEditorApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            logger.LogInformation(Configuration.GetConnectionString("DefaultConnection"));
+            app.UseMiddleware<RequestLoggingMiddleware>();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             if(env.IsDevelopment())
             {
@@ -183,6 +184,8 @@ namespace CodeEditorApi
 
             app.UseAuthentication();
             app.UseRouting();
+
+            
 
             if (env.IsDevelopment())
             {
