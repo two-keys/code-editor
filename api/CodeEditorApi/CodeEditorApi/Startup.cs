@@ -1,6 +1,5 @@
 using CodeEditorApi.Errors;
 using CodeEditorApi.Helpers;
-using CodeEditorApi.Services;
 using CodeEditorApiDataAccess.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +48,7 @@ namespace CodeEditorApi
                     builder =>
                     {
                         builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                            .WithOrigins("https://*.vercel.app", "https://dev.siucode.io")
+                            .WithOrigins("https://*.vercel.app")
                             .AllowAnyMethod()
                             .AllowCredentials()
                             .AllowAnyHeader()
@@ -156,7 +155,7 @@ namespace CodeEditorApi
                 app.UseCors("staging");
             }
 
-            app.UseMiddleware<RequestLoggingMiddleware>();
+            //app.UseMiddleware<RequestLoggingMiddleware>();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             if(env.IsDevelopment())
             {
