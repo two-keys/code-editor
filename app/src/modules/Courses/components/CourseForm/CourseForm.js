@@ -2,7 +2,6 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Flex, Grid } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
-import FormToolTip from "@Components/FormTooltip/FormToolTip";
 import { courseRegEx, courseTitleTooltipLines } from "@Modules/Courses/Courses";
 
 /**
@@ -22,7 +21,6 @@ function CourseForm(props) {
                     <FormControl id="course_title" isRequired>
                         <FormLabel display="flex" alignItems="center">Title
                             <Input placeholder="..." ml={15} defaultValue={dvs["title"]} pattern={courseRegEx()}/>
-                            <FormToolTip lines={courseTitleTooltipLines}/>
                         </FormLabel>
                     </FormControl>
                     <FormControl id="description" isRequired>
