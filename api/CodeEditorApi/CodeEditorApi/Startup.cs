@@ -47,12 +47,11 @@ namespace CodeEditorApi
                 options.AddPolicy(name: "staging",
                     builder =>
                     {
-                        builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                            .WithOrigins("https://*.siucode.io")
+                        builder
+                            .AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowCredentials()
-                            .AllowAnyHeader()
-                            .Build();
+                            .AllowAnyHeader();
                     }
                 );
             });
