@@ -178,6 +178,13 @@ namespace CodeEditorApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+            }
 
             app.UseHttpsRedirection();
 
