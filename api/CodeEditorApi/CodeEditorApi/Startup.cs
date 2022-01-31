@@ -48,7 +48,7 @@ namespace CodeEditorApi
                     builder =>
                     {
                         builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                            .WithOrigins("https://*.vercel.app", "https://*.siucode.io")
+                            .WithOrigins("https://*.siucode.io")
                             .AllowAnyMethod()
                             .AllowCredentials()
                             .AllowAnyHeader()
@@ -146,7 +146,6 @@ namespace CodeEditorApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            logger.LogInformation(Configuration.GetConnectionString("DefaultConnection"));
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             if(env.IsDevelopment())
             {
@@ -189,10 +188,12 @@ namespace CodeEditorApi
 
             if (env.IsDevelopment())
             {
+                logger.LogInformation("Using dev cors");
                 app.UseCors("dev");
             }
             else
             {
+                logger.LogInformation("Using staging cors");
                 app.UseCors("staging");
             }
 
