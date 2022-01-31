@@ -145,16 +145,6 @@ namespace CodeEditorApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-
-            if (env.IsDevelopment())
-            {
-                app.UseCors("dev");
-            }
-            else
-            {
-                app.UseCors("staging");
-            }
-
             //app.UseMiddleware<RequestLoggingMiddleware>();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             if(env.IsDevelopment())
@@ -194,6 +184,16 @@ namespace CodeEditorApi
             app.UseAuthentication();
             app.UseRouting();
 
+
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors("dev");
+            }
+            else
+            {
+                app.UseCors("staging");
+            }
 
             app.UseAuthorization();
 
