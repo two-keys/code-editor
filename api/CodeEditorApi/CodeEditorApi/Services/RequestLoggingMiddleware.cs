@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace CodeEditorApi.Services
@@ -24,14 +23,6 @@ namespace CodeEditorApi.Services
             }
             finally
             {
-                _logger.LogInformation(
-                    "req headers {headers}",
-                    JsonConvert.SerializeObject(context.Request.Headers));
-
-                _logger.LogInformation(
-                    "res headers {headers}",
-                    JsonConvert.SerializeObject(context.Response.Headers));
-
                 _logger.LogInformation(
                     "Request {method} {url} => {statusCode}",
                     context.Request?.Method,

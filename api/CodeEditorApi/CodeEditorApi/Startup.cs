@@ -47,7 +47,9 @@ namespace CodeEditorApi
                 options.AddPolicy(name: "staging",
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
+                        builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://*.vercel.app")
+                            .AllowCredentials()
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                     }
@@ -176,15 +178,7 @@ namespace CodeEditorApi
                 app.UseDeveloperExceptionPage();
             }
 
-            /*
-            app.UseHttpsRedirection();
-
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
-            */
+            //app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseRouting();
