@@ -17,16 +17,17 @@ function RegistrationForm() {
     const [role, setRole] = useState('Student');
     const [passwordErrors, setPaswordErrors] = useState(undefined);
 
+    const showAccessCode = role != "Student";
+
     async function handleSubmit(event) {
-        const errors = validatePassword(password);
         event.preventDefault();
+        const errors = validatePassword(password);
+        setPaswordErrors(errors);
         if (errors) {
-            setPaswordErrors(errors);
-            console.log(errors);
             return;
         }
 
-        let token = await register(event);
+        let token = await register(event, showAccessCode);
         if (token) {
             setCookie("user", token, {
                 path: "/",
@@ -63,10 +64,11 @@ function RegistrationForm() {
                         <option id={"Admin"} value={"Admin"}>Admin</option>
                     </Select>
                 </Flex>
-                {role != "Student" ?
-                    <FormControl id="accesscode" isRequired>
+                {showAccessCode ?
+                    <FormControl id="accesscode">
                         <Input placeholder="Access Code" />
-                    </FormControl> : null}
+                    </FormControl>
+                    : null}
                 <Button variant="white" type="submit">Sign Up</Button>
             </Grid>
         </form>

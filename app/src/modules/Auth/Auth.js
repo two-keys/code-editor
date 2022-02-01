@@ -75,15 +75,16 @@ async function login(event) {
  * A function that sends form data to the server for registration.
  * Validation is done through attributes on the form's html
  * @param event submit event from a form.
+ * @param needsAccessCode
  * @return The response from the server.
  */
- async function register(event) {
+ async function register(event, needsAccessCode) {
     event.preventDefault();
 
     let isValid = true;
     let form = event.target;
     let token;
-    
+    console.log("HELLO??");
     [
         "name",
         "email",
@@ -91,6 +92,9 @@ async function login(event) {
         "accesscode",
         "role"
     ].forEach(key => {
+        console.log(key, needsAccessCode);
+        if(key == "accesscode" && !needsAccessCode)
+            return
         isValid = (form[key].validity.valid) ? isValid : false;
     });
 
