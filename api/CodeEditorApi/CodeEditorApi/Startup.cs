@@ -48,7 +48,7 @@ namespace CodeEditorApi
                     builder =>
                     {
                         builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                            .WithOrigins("https://*.vercel.app")
+                            .WithOrigins("https://*.vercel.app", "https://*.dev.siucode.io")
                             .AllowCredentials()
                             .AllowAnyMethod()
                             .AllowAnyHeader();
@@ -176,9 +176,8 @@ namespace CodeEditorApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseHttpsRedirection();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseRouting();
