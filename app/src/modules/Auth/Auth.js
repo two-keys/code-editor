@@ -84,7 +84,6 @@ async function login(event) {
     let isValid = true;
     let form = event.target;
     let token;
-    console.log("HELLO??");
     [
         "name",
         "email",
@@ -92,7 +91,6 @@ async function login(event) {
         "accesscode",
         "role"
     ].forEach(key => {
-        console.log(key, needsAccessCode);
         if(key == "accesscode" && !needsAccessCode)
             return
         isValid = (form[key].validity.valid) ? isValid : false;
