@@ -178,7 +178,7 @@ namespace CodeEditorApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseRouting();
