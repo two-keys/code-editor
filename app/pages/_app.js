@@ -2,8 +2,6 @@ import { ChakraProvider } from "@chakra-ui/react"
 import Header from "@Components/Header/Header";
 import theme from '@Utils/theme'
 
-// Force rebuild
-
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
