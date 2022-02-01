@@ -49,7 +49,6 @@ namespace CodeEditorApi
                     {
                         builder.AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowCredentials()
                             .AllowAnyHeader();
                     }
                 );
