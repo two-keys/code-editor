@@ -1,4 +1,4 @@
-import { Flex, Container, Button } from "@chakra-ui/react";
+import { Flex, Container, Button, Spinner } from "@chakra-ui/react";
 import { loggedIn } from "@Modules/Auth/Auth";
 import instance from "@Utils/instance";
 import Editor from "@monaco-editor/react";
@@ -54,6 +54,7 @@ function Tutorial(props) {
   const token = cookies.user;
 
   const [showSidebar, setShow] = useState(true);
+  const [compiling, setCompilationStatus] = useState(false);
 
   const [editorText, setText] = useState(`<button onClick="document.getElementById('demo').innerHTML = \n\t'Change me!'"\n>\n\tClick Me!\n</button>\n<div id="demo"></div>\n`);
   const iframeRef = useRef();
@@ -90,7 +91,9 @@ function Tutorial(props) {
    * Sends code to compile to the server, setting inProgress and isComplete as necessary. 
    */
   async function runCode(event) {
+    setCompilationStatus(true);
     let success = await compileAndRunCode(id, token, 'CSharp', editorText);
+    setCompilationStatus(false);
     if (success) {
       let redirect = `/courses/${courseId}`;
       Router.push(redirect);
@@ -127,7 +130,7 @@ function Tutorial(props) {
             />
             </Flex>
             <Flex h="50px" bg="ce_blue" justify={"end"}>
-              <Button w="10%" h="100%" variant="blue" onClick={runCode}>RUN</Button>
+              <Button disabled={compiling} w="10%" h="100%" variant="blue" onClick={runCode}>{(!compiling) ? "Run": <Spinner />}</Button>
             </Flex>
           </Flex>
           <Flex flex="1" width="100%">
