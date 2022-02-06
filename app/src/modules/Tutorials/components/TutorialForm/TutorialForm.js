@@ -30,7 +30,7 @@ function TutorialForm(props) {
     const spacing = 5;
     const selectWidth = '150px';
 
-    const [template, setTemplate] = useState(``);
+    const [template, setTemplate] = useState(dvs["template"] || ``);
     const [prompt, setPrompt] = useState(dvs["prompt"] || '');
 
     return (
