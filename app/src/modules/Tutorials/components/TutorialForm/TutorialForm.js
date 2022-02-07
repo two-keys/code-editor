@@ -1,13 +1,19 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Flex, Box } from "@chakra-ui/layout";
+import { Flex, Grid, Box } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/react";
 import { Textarea } from "@chakra-ui/textarea";
 import { difficultylevels, programmingLanguages } from "@Utils/static";
 import dynamic from 'next/dynamic';
+import { useState } from "react";
 const MarkdownEditor = dynamic(
     () => import('../MarkdownEditor/MarkdownEditor').then(mod => mod.default),
     { ssr: false }
+);
+import Editor from "@monaco-editor/react";
+const MarkdownRenderer = dynamic(
+  () => import("@Modules/Tutorials/components/MarkdownRenderer/MarkdownRenderer"),
+  { ssr: false }
 );
 
 /**
@@ -23,6 +29,9 @@ function TutorialForm(props) {
 
     const spacing = 5;
     const selectWidth = '150px';
+
+    const [template, setTemplate] = useState(dvs["template"] || ``);
+    const [prompt, setPrompt] = useState(dvs["prompt"] || '');
 
     return (
         <form id="tutorial_form" style={{ width: '100%' }}>
@@ -74,11 +83,40 @@ function TutorialForm(props) {
                         })}
                     </Select>
                 </Flex>
-                <Flex direction={"column"} mt={spacing + 5} align="start" w="100%" mb="10%">
-                    <Box  fontSize={"md"} py={2}>Tutorial Instructions</Box>
-                    <MarkdownEditor prompt={dvs["prompt"]} />
-                </Flex>
             </Flex>
+            <Grid id="panes" w="100%" maxW="container.lg" height="fit-content" templateColumns="repeat(3, 33%)" mx={2}>
+                <Box fontSize={"md"} py={2}>Tutorial Instructions</Box>
+                <Box fontSize={"md"} py={2}>Instructions Preview</Box>
+                <Box fontSize={"md"} py={2}>Boilerplate code</Box>
+                <Box pb="10%">
+                    <MarkdownEditor prompt={dvs["prompt"]} callback={setPrompt} />
+                </Box>
+                <MarkdownRenderer>
+                    {prompt}
+                </MarkdownRenderer>
+                <Editor
+                    height="100%"
+                    width="100%"
+                    theme="vs-dark"
+                    defaultLanguage="html"
+                    options={{
+                        padding: {
+                        top: "10px"
+                        },
+                        scrollBeyondLastLine: false,
+                        wordWrap: "on",
+                        minimap: {
+                        enabled: false
+                        },
+                        scrollbar: {
+                        vertical: "auto"
+                        }
+                    }}
+                    defaultValue={template}
+                    onChange={(value, event) => { setTemplate(value); }}
+                />
+                <Input id="template" type="hidden" value={template} />
+            </Grid>
         </form>
     );
 }
