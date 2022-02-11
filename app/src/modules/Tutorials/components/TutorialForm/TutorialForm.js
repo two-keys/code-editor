@@ -1,7 +1,7 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Flex, Grid, Box } from "@chakra-ui/layout";
-import { Select } from "@chakra-ui/react";
+import { Button, Select, Spacer } from "@chakra-ui/react";
 import { Textarea } from "@chakra-ui/textarea";
 import { difficultylevels, programmingLanguages } from "@Utils/static";
 import dynamic from 'next/dynamic';
@@ -11,10 +11,8 @@ const MarkdownEditor = dynamic(
     { ssr: false }
 );
 import Editor from "@monaco-editor/react";
-const MarkdownRenderer = dynamic(
-  () => import("@Modules/Tutorials/components/MarkdownRenderer/MarkdownRenderer"),
-  { ssr: false }
-);
+import FileUpload from "@Components/FileUpload/FileUpload";
+import TemplateLoader from "../TemplateLoadder/TemplateLoader";
 
 /**
  * Handles displaying form UI
@@ -32,6 +30,7 @@ function TutorialForm(props) {
 
     const [template, setTemplate] = useState(dvs["template"] || ``);
     const [prompt, setPrompt] = useState(dvs["prompt"] || '');
+    const [languageId, setLanguageId] = useState(dvs["languageId"] || '');
 
     return (
         <form id="tutorial_form" style={{ width: '100%' }}>
@@ -66,7 +65,7 @@ function TutorialForm(props) {
                 </Flex>
                 <Flex w="100%" mt={spacing}>
                     <Box w="20%" fontWeight={"bold"} fontSize={"md"}>Language</Box>
-                    <Select w="30%" maxW={selectWidth} id="language" defaultValue={dvs["languageId"]}>
+                    <Select w="30%" maxW={selectWidth} id="language" defaultValue={dvs["languageId"]} onChange={(event) => setLanguageId(event.target.value)}>
                         {languageOptions.map((option, index) => {
                             const { dbIndex, value } = option;
                             return <option id={index} value={dbIndex}>{value}</option>
@@ -83,39 +82,46 @@ function TutorialForm(props) {
                         })}
                     </Select>
                 </Flex>
+                <Flex w="100%" mt={spacing} direction="column">
+                    <Box w="100%" fontWeight={"bold"} fontSize={"md"}>Tutorial Base Code</Box>
+                    <p>Choose whether you want to upload an existing code file or if you want to edit boilerplate code provided for us.</p>
+                    <Spacer />
+                    <Box id="actions">
+                        <FileUpload id="fileSelect" py={0} callback={setTemplate} />
+                        <TemplateLoader languageId={languageId} callback={setTemplate} />
+                    </Box>
+                </Flex>
             </Flex>
-            <Grid id="panes" w="100%" maxW="container.lg" height="fit-content" templateColumns="repeat(3, 33%)" mx={2}>
+            <Grid id="panes" w="100%" maxW="container.lg" height="fit-content" templateColumns="repeat(2, 50%)" mx={2}>
                 <Box fontSize={"md"} py={2}>Tutorial Instructions</Box>
-                <Box fontSize={"md"} py={2}>Instructions Preview</Box>
                 <Box fontSize={"md"} py={2}>Boilerplate code</Box>
                 <Box pb="10%">
                     <MarkdownEditor prompt={dvs["prompt"]} callback={setPrompt} />
                 </Box>
-                <MarkdownRenderer>
-                    {prompt}
-                </MarkdownRenderer>
-                <Editor
-                    height="100%"
-                    width="100%"
-                    theme="vs-dark"
-                    defaultLanguage="html"
-                    options={{
-                        padding: {
-                        top: "10px"
-                        },
-                        scrollBeyondLastLine: false,
-                        wordWrap: "on",
-                        minimap: {
-                        enabled: false
-                        },
-                        scrollbar: {
-                        vertical: "auto"
-                        }
-                    }}
-                    defaultValue={template}
-                    onChange={(value, event) => { setTemplate(value); }}
-                />
-                <Input id="template" type="hidden" value={template} />
+                <Box>
+                    <Editor
+                        height="100%"
+                        width="100%"
+                        theme="vs-dark"
+                        defaultLanguage="html"
+                        options={{
+                            padding: {
+                            top: "10px"
+                            },
+                            scrollBeyondLastLine: false,
+                            wordWrap: "on",
+                            minimap: {
+                            enabled: false
+                            },
+                            scrollbar: {
+                            vertical: "auto"
+                            }
+                        }}
+                        value={template}
+                        onChange={(value, event) => { setTemplate(value); }}
+                    />
+                    <Input id="template" type="hidden" value={template} />
+                </Box>
             </Grid>
         </form>
     );
