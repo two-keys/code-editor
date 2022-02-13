@@ -33,7 +33,6 @@ export async function getServerSideProps(context) {
     headers: {...headers},
   });
   
-  if (response.statusText == "OK")
   data = response.data.map((courseData) => {
     // we only need the titles for each course
     return {
