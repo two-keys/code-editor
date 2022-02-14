@@ -38,3 +38,23 @@ BEGIN
     END CATCH
 END;
 GO
+
+BEGIN
+    BEGIN TRY
+        INSERT INTO [dbo].[User](Name, Email, Hash, RoleId) VALUES (
+            'Teacher', 
+            'DevTeacher@teacher.com', 
+            'Pbkdf2-10000-hOUYyxfF4fkhRjwDOn8McQ==-nN7GLmMf7964lucYG7ZOwKpEtHhzuxnIksxZQ27YWgA=',
+            2
+        );
+        INSERT INTO [dbo].[User](Name, Email, Hash, RoleId) VALUES (
+            'Student', 
+            'DevStudent@student.com', 
+            'Pbkdf2-10000-peqYKfUKbJXx+9FnBL+92Q==-VNDl+0Wwdwb6skyOHPJjggp5tXvwabfDEaN5cULY7ZU=',
+            3
+        );
+    END TRY
+    BEGIN CATCH
+    END CATCH
+END;
+GO

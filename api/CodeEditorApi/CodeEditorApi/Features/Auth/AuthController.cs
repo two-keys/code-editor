@@ -1,9 +1,10 @@
-﻿using CodeEditorApi.Features.Auth.Login;
+﻿using CodeEditorApi.Errors;
+using CodeEditorApi.Features.Auth.Login;
 using CodeEditorApi.Features.Auth.Register;
 using CodeEditorApi.Features.Auth.UpdateUser;
 using CodeEditorApi.Services;
-using CodeEditorApiDataAccess.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -19,13 +20,15 @@ namespace CodeEditorApi.Features.Auth
         private readonly ILoginCommand _loginCommand;
         private readonly IEmailService _emailService;
         private readonly IUpdateUserCommand _updateUserCommand;
+        private readonly IWebHostEnvironment _enviornment;
 
-        public AuthController(IRegisterCommand registerCommand, ILoginCommand loginCommand, IEmailService emailService, IUpdateUserCommand updateUserCommand)
+        public AuthController(IRegisterCommand registerCommand, ILoginCommand loginCommand, IEmailService emailService, IUpdateUserCommand updateUserCommand, IWebHostEnvironment environment)
         {
             _registerCommand = registerCommand;
             _loginCommand = loginCommand;
             _emailService = emailService;
             _updateUserCommand = updateUserCommand;
+            _enviornment = environment;
         }
 
         /// <summary>
@@ -35,8 +38,12 @@ namespace CodeEditorApi.Features.Auth
         /// <returns></returns>
         [HttpPost("Register")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> RegisterTeacher([FromBody] RegisterBody registerBody)
+        public async Task<ActionResult<string>> Register([FromBody] RegisterBody registerBody)
         {
+            if(_enviornment.EnvironmentName == "Staging")
+            {
+                return ApiError.BadRequest("Route is disabled in staging");
+            }
             return await _registerCommand.ExecuteAsync(registerBody);
         }
 
