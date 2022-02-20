@@ -41,34 +41,15 @@ function validatePassword(password) {
  * @param event submit event from a form.
  * @returns JWT token
  */
-async function login(event) {
+function login(event) {
     event.preventDefault();
 
-    let isValid = true;
     let form = event.target;
-    let token;
-    
-    [
-        "email",
-        "password",
-    ].forEach(key => {
-        isValid = (form[key].validity.valid) ? isValid : false;
+   
+    return instance.post("/Auth/Login", {
+        email: form["email"].value,
+        password: form["password"].value,
     });
-
-    if (isValid) { 
-        try {       
-            let response = await instance.post("/Auth/Login", {
-                email: form["email"].value,
-                password: form["password"].value,
-            });
-
-            token = response.data;
-            return token;
-        } catch (error) {
-            //TODO: Error handling.
-            //console.log(error.response);
-        }
-    }
 }
 
 /**
@@ -78,45 +59,21 @@ async function login(event) {
  * @param needsAccessCode
  * @return The response from the server.
  */
- async function register(event, needsAccessCode) {
+function register(event, needsAccessCode) {
     event.preventDefault();
 
-    let isValid = true;
     let form = event.target;
-    let token;
-    [
-        "name",
-        "email",
-        "password",
-        "accesscode",
-        "role"
-    ].forEach(key => {
-        if(key == "accesscode" && !needsAccessCode)
-            return
-        isValid = (form[key].validity.valid) ? isValid : false;
-    });
+ 
+    let data = {
+        name: form["name"].value,
+        email: form["email"].value,
+        password: form["password"].value,
+        role: form["role"].value, 
+    };
 
-    if (isValid) {      
-        try {
-            let data = {
-                name: form["name"].value,
-                email: form["email"].value,
-                password: form["password"].value,
-                role: form["role"].value, 
-            };
+    if(needsAccessCode) data.accesscode = form["accesscode"].value;
 
-            if(data.role != "Student") data.accesscode = form["accesscode"].value;
-
-            let response = await instance.post("/Auth/Register", data);
-
-            token = response.data;
-        } catch (error) {
-            //TODO: Error handling.
-            //console.log(error.response);
-        }
-    }
-
-    return token;
+    return instance.post("/Auth/Register", data);
 }
 
 export { maxAgeInHours, loggedIn, validatePassword, login, register };

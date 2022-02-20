@@ -31,7 +31,7 @@ function EditableTutorialItem(props) {
     }
 
     return(
-        <Grid templateColumns="repeat(5, 1fr)" gap={6} pl={5} mt={15} mb={15}>
+        <Grid templateColumns="repeat(5, 1fr)" gap={3} pl={5} mt={3}>
             <GridItem>
                 {title}
             </GridItem>
@@ -48,7 +48,7 @@ function EditableTutorialItem(props) {
                 </HStack>
             </GridItem>
             <GridItem colStart={6}> 
-                <HStack spacing={3}>            
+                <HStack spacing={3} align="center">            
                     <ViewIcon onClick={() => {
                         let redirect = '/tutorials/' + id; 
                         Router.push(redirect);

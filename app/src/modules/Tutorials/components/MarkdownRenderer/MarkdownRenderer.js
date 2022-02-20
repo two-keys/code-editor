@@ -12,7 +12,7 @@ function MarkdownRenderer(props) {
 
     return(
         <Box id="rendered" whiteSpace="pre-wrap" maxWidth={maxWidth}>
-            <ReactMarkdown className="Huh?">
+            <ReactMarkdown className="demo-wrapper markdown-renderer">
                 {props.children}
             </ReactMarkdown>
         </Box>

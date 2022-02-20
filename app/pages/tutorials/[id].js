@@ -92,6 +92,7 @@ function Tutorial(props) {
    * Sends code to compile to the server, setting inProgress and isComplete as necessary. 
    */
   async function runCode(event) {
+    console.log(editorText);
     setCompilationStatus(true);
     const res = await compileAndRunCode(id, token, language, editorText);
     setCompilationStatus(false);

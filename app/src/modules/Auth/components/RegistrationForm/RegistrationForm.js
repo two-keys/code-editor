@@ -15,6 +15,7 @@ function RegistrationForm() {
     const [password, setPassword] = useState('');
     const [cookies, setCookie] = useCookies(["user"]);
     const [role, setRole] = useState('Student');
+    const [emailError, setEmailError] = useState(undefined);
     const [passwordErrors, setPaswordErrors] = useState(undefined);
 
     const showAccessCode = role != "Student";
@@ -26,14 +27,28 @@ function RegistrationForm() {
         if (errors) {
             return;
         }
+        
+        try {
+            setEmailError(undefined);
+            let res = await register(event, showAccessCode);
+            const token = res.data;
 
-        let token = await register(event, showAccessCode);
-        if (token) {
-            setCookie("user", token, {
-                path: "/",
-                maxAge: maxAgeInHours * 60 * 60, //seconds
-                sameSite: true,
-            })
+            if (token) {
+                setCookie("user", token, {
+                    path: "/",
+                    maxAge: maxAgeInHours * 60 * 60, //seconds
+                    sameSite: true,
+                })
+            }
+        } catch(e) {
+            console.dir(e);
+            if(e.response) {
+                const msg = e.response.data.message;
+                console.log(msg.includes('email'));
+                if(msg.includes('email')) {
+                    setEmailError(msg);
+                }
+            }
         }
     }
 
@@ -42,8 +57,13 @@ function RegistrationForm() {
     return (
         <form onSubmit={handleSubmit} w="100%">
             <Grid templateRows="5 1fr" gap={6} w="100%">
-                <FormControl id="email" isRequired>
+                <FormControl id="email" isRequired isInvalid={emailError}>
                     <Input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} />
+                    { emailError ? (
+                        <FormErrorMessage>
+                            {emailError}
+                        </FormErrorMessage>
+                    ) : null}
                 </FormControl>
                 <FormControl id="name" isRequired>
                     <Input placeholder="Name" />

@@ -42,12 +42,12 @@ function TutorialForm(props) {
         if (lowercase == 'html' || lowercase == 'javascript' || lowercase == 'css') {
             setMonacoLanguage('html');
         } else
-        setMonacoLanguage(uppercase.toLowerCase());
+            setMonacoLanguage(uppercase.toLowerCase());
     }, [languageId]);
 
     return (
         <form id="tutorial_form" style={{ width: '100%' }}>
-            <Flex w="90%" align={"flex-end"} ml="auto" flexDir={"column"}>
+            <Flex w="90%" align={"flex-end"} ml="auto" flexDir={"column"} fontFamily="input">
                 {dvs["id"] &&
                     <Input id="tutorial_id" type="hidden" defaultValue={dvs["id"]} />
                 }
@@ -65,14 +65,14 @@ function TutorialForm(props) {
                 <Flex w="100%" mt={spacing}>
                     <Box w="20%" fontWeight={"bold"} fontSize={"md"}>Title</Box>
                     <FormControl w="80%" id="tutorial_title">
-                        <Input placeholder="..." defaultValue={dvs["title"]} />
+                        <Input placeholder="..." defaultValue={dvs["title"]} required/>
                     </FormControl>
 
                 </Flex>
                 <Flex w="100%" mt={spacing}>
                     <Box w="20%" fontWeight={"bold"} fontSize={"md"}>Description</Box>
                     <FormControl w="80%" id="description">
-                        <Textarea placeholder="..." defaultValue={dvs["description"]} />
+                        <Textarea placeholder="..." defaultValue={dvs["description"]} required />
                     </FormControl>
 
                 </Flex>
@@ -99,13 +99,13 @@ function TutorialForm(props) {
                     </Box>
                 </Flex>
             </Flex>
-            <Grid id="panes" w="100%" maxW="container.lg" height="fit-content" templateColumns="repeat(2, 50%)" mx={2}>
+            <Grid pb={"10%"} pt={"20px"} id="panes" w="100%" maxW="container.lg" height="fit-content" templateColumns="repeat(2, 50%)" mx={2} fontFamily="input">
                 <Box fontSize={"md"} py={2}>Tutorial Instructions</Box>
-                <Box fontSize={"md"} py={2}>Boilerplate code</Box>
-                <Box pb="10%">
-                    <MarkdownEditor prompt={dvs["prompt"]} callback={setPrompt} />
-                </Box>
+                <Box fontSize={"md"} py={2}>Template code</Box>
                 <Box>
+                    <MarkdownEditor prompt={dvs["prompt"]} callback={setPrompt}/>
+                </Box>
+                <Box h="525px" boxShadow={"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}>
                     <Editor
                         height="100%"
                         width="100%"
@@ -114,15 +114,17 @@ function TutorialForm(props) {
                         language={monacoLanguage}
                         options={{
                             padding: {
-                            top: "10px"
+                                top: "10px"
                             },
                             scrollBeyondLastLine: false,
+                            overviewRulerBorder: false,
+                            overviewRulerLanes: 0,
                             wordWrap: "on",
                             minimap: {
-                            enabled: false
+                                enabled: false
                             },
                             scrollbar: {
-                            vertical: "auto"
+                                vertical: "auto"
                             }
                         }}
                         value={template}

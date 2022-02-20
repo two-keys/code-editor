@@ -79,6 +79,23 @@ const styles = {
     },
     body: {
       color: "ce_black",
+    },
+    '.demo-wrapper': {
+      h1: {
+        fontSize: 'lg',
+        lineHeight: '100%',
+        my: '0'
+      },
+      h2: {
+        fontSize: 'md',
+        lineHeight: '100%',
+        my: '0'
+      },
+    },
+    '.markdown-renderer': {
+      fontFamily: 'arial',
+      pt: '5px',
+      mx: '5px'
     }
   },
 }

@@ -1,4 +1,5 @@
 import { Text } from "@chakra-ui/react";
+import { CompositeDecorator } from "draft-js";
 import ContentStateInlineStyle from "draft-js/lib/ContentStateInlineStyle";
 import React from "react";
 
@@ -20,23 +21,8 @@ class CustomText extends React.Component {
   }
 
   render() {
-    return <Text fontSize={this.props.blockProps.fontSize}>{this.props.block.getText()}</Text>
-  }
-}
-
-export default function blockRenderer(contentBlock) {
-  const type = contentBlock.getType();
-  const text = contentBlock.getText();
-  console.log(text);
-  // Format is header-size
-  if(type.startsWith('header')) {
-    const size = type.split('-')[1];
-    return {
-      component: CustomText,
-      props: {
-        fontSize: sizeMapping[size],
-        children: text
-      }
-    }
+    return <Text fontSize={this.props.blockProps.fontSize}>
+      {this.props.block.getText()}
+    </Text>
   }
 }
