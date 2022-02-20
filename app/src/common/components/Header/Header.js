@@ -5,7 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
 import SNoLink from "@Components/SNoLink/SNoLink";
 import { loggedIn } from "@Modules/Auth/Auth";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { getRole } from "@Utils/jwt";
+import { getRole, getName } from "@Utils/jwt";
 import { useCookies } from "react-cookie";
 
 /**
@@ -15,6 +15,7 @@ import { useCookies } from "react-cookie";
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const isLoggedIn = loggedIn(cookies.user);
     const userRole = (isLoggedIn) ? getRole(cookies.user) : "None";
+    const username = (isLoggedIn) ? getName(cookies.user) : "<name>";
     
     const profileImage = "/defaults/avatar.png"; // TODO: Update with actual avatar.
 
@@ -32,7 +33,7 @@ import { useCookies } from "react-cookie";
                             <SNoLink href="/dashboard/teacher">My Content</SNoLink>
                             }
                             <SNoLink href="/dashboard">My Courses</SNoLink>
-                            <Avatar size="sm" name="user icon" src={profileImage} />
+                            <Box id="name">{username}</Box>
                             <Menu>
                                 <MenuButton>
                                     <ChevronDownIcon />

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 const keys = {
     role: "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
     id: "sub",
+    name: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
 }
 
 /**
@@ -39,6 +40,17 @@ function getRole(token) {
 }
 
 /**
+ * 
+ * @param {string} token 
+ * @returns Username
+ */
+function getName(token) {
+    let decoded = decode(token);
+
+    return decoded[keys.name]
+}
+
+/**
  * TODO: This is such an awful implementation. We should never be passing this in a POST request. Replace any utilization of this once we get CourseBody, TutorialBody, etc setup in the backend.
  * @param {string} token
  * @returns {string} User id.
@@ -49,4 +61,4 @@ function getRole(token) {
     return decoded[keys.id];
 }
 
-export { keys as JWTKeys, decode, getRole, getID };
+export { keys as JWTKeys, decode, getRole, getName, getID };
