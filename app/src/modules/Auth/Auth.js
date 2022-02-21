@@ -76,4 +76,33 @@ function register(event, needsAccessCode) {
     return instance.post("/Auth/Register", data);
 }
 
-export { maxAgeInHours, loggedIn, validatePassword, login, register };
+/**
+ * A function that sends form data to the server for user-settings updating
+ * Validation is done through attributes on the form's html
+ * Backend should validate that the user is allowed to update via comparing password digests.
+ * @param event Submit event from a form 
+ * @param {string} token JWT token.
+ * @returns The response from the server.
+ */
+function updateUser(event, token) {
+    let form = event.target;
+
+    const headers = {};
+
+    if (typeof token != 'undefined') {
+        headers["Authorization"] = "Bearer " + token;
+    }
+
+    let data = {
+        name: form["name"].value,
+        email: form["email"].value,
+        oldPassword: form["oldPassword"].value,
+        newPassword: form["newPassword"].value,
+    };
+    
+    return instance.put("/Auth/UpdateUser", data, {
+        headers: {...headers},
+    });
+}
+
+export { maxAgeInHours, loggedIn, validatePassword, login, register, updateUser };
