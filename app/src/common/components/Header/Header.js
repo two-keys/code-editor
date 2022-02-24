@@ -30,9 +30,11 @@ import { useCookies } from "react-cookie";
                         {isLoggedIn && 
                         <HStack spacing={3}>
                             {(userRole == "Teacher" || userRole == "Admin") && 
-                            <SNoLink href="/dashboard/teacher">My Content</SNoLink>
+                                <SNoLink href="/dashboard/teacher">My Content</SNoLink>
                             }
-                            <SNoLink href="/dashboard">My Courses</SNoLink>
+                            {(userRole == "Student") &&
+                                <SNoLink href="/dashboard">My Courses</SNoLink>
+                            }
                             <Box id="name">{username}</Box>
                             <Menu>
                                 <MenuButton>
