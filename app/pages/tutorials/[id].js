@@ -98,7 +98,6 @@ function Tutorial(props) {
     setCompilationStatus(false);
     if (res) {
       setCompiledText(res.data)
-      console.log(res.data);
     }
   }
 

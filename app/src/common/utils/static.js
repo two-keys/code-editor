@@ -18,24 +18,12 @@ const difficultylevels = [
     },
 ];
 
-const tutorialStatus = [
-    {
-        value: 'NotStarted',
-        dbIndex: 1
-    },
-    {
-        value: 'InProgress',
-        dbIndex: 2
-    },
-    {
-        value: 'Completed',
-        dbIndex: 3
-    },
-    {
-        value: 'Restarted',
-        dbIndex: 4
-    },
-]
+const tutorialStatus = {
+    NotStarted: 1,
+    InProgress: 2,
+    Completed: 3,
+    Restarted: 4
+}
 
 const programmingLanguages = [
     {
