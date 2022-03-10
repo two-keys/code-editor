@@ -5,11 +5,13 @@ import TutorialList from "@Modules/Tutorials/components/TutorialList/TutorialLis
 import { checkIfInCourse, getCourseDetails, registerForCourse } from "@Modules/Courses/Courses";
 import { loggedIn } from "@Modules/Auth/Auth";
 import { useCookies } from "react-cookie";
-import { getTutorialsFromCourse, getUserTutorialsDetailsFromCourse } from "@Modules/Tutorials/Tutorials";
+import { getLastTutorial, getTutorialsFromCourse, getUserTutorialsDetailsFromCourse } from "@Modules/Tutorials/Tutorials";
+import SNoLinkButton from "@Components/SNoLinkButton/SNoLinkButton";
 
 export async function getServerSideProps(context) {
     const { id } = context.query;
     var courseDetails = {};
+    var lastTutorial;
 
     const cookies = context.req.cookies;
     const isLoggedIn = loggedIn(cookies.user);
@@ -34,10 +36,19 @@ export async function getServerSideProps(context) {
         }
     });
 
+    if (isRegistered) {    
+        const lastTutorialResponse = await getLastTutorial(id, token); // last in progress tutorial
+
+        if (lastTutorialResponse) {
+            lastTutorial = lastTutorialResponse.data;
+        }
+    }
+
     return {
         props: {
             ...courseDetails,
             tutorials: tutorials,
+            lastTutorialId: (lastTutorial) ? lastTutorial.id : null,
             isRegistered: isRegistered,
         }, // will be passed to the page component as props
     }
@@ -48,7 +59,7 @@ function Course(props) {
     const isLoggedIn = loggedIn(cookies.user);
     const token = cookies.user;
     
-    const { id, title, description, tutorials, isRegistered } = props;
+    const { id, title, description, tutorials, isRegistered, lastTutorialId } = props;
 
     /**
      * 
@@ -78,9 +89,13 @@ function Course(props) {
                 {description}
                 <Center>
                     {isRegistered && 
-                    <Button variant="black" onClick={() => {/** TODO */}} w="xs" maxW="md" pt={15} pb={15} mb={15} mr={15} isDisabled="true">
+                    <SNoLinkButton 
+                        href={(lastTutorialId) ? "/tutorials/" + lastTutorialId : undefined}
+                        disabled={(typeof lastTutorialId == 'undefined') ? true : undefined}
+                        variant="black"  w="xs" maxW="md" pt={15} pb={15} mb={15} mr={15}
+                    >
                         Continue From Last Tutorial
-                    </Button>
+                    </SNoLinkButton>
                     }
                     <Button variant="maroon" onClick={(event) => start(event, tutorials[0].id, id)} w="xs" maxW="md" pt={15} pb={15} mb={15}>
                         Start from Beginning
