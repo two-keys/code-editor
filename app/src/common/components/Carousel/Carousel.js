@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { Icon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Image } from "@chakra-ui/image";
 import { Box, Flex, Grid, GridItem, Heading, HStack, VStack } from "@chakra-ui/layout";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
@@ -56,9 +56,11 @@ function Carousel(props) {
 
     return (
         <HStack spacing="35px" mt="15px" mb="15px" alignContent="center" justifyContent="center">
-            {page != 1 &&
-                <ChevronLeftIcon onClick={decrementPage} boxSize="2em" color="ce_white" bgColor="ce_mainmaroon" borderRadius="2xl" />
-            }
+            <ChevronLeftIcon onClick={decrementPage}
+                color={(page != 1) ? "ce_white" : "transparent"} 
+                bgColor={(page != 1) ? "ce_mainmaroon" : "transparent"}
+                boxSize="2em" borderRadius="2xl" 
+            />
             {subsetOfItems.map((item, subsetIndex) => {
                 const { id, title, author } = item;
                 let smallTitle = (title.length > 6) ? title.substr(0, 6) + "..." : title;
@@ -82,9 +84,11 @@ function Carousel(props) {
                     </Tooltip>
                 );
             })}
-            {page != Math.ceil(items.length / itemsPerPage) &&
-                <ChevronRightIcon onClick={incrementPage} boxSize="2em" color="ce_white" bgColor="ce_mainmaroon" borderRadius="2xl" />
-            }
+            <ChevronRightIcon onClick={incrementPage}
+                color={(page != Math.ceil(items.length / itemsPerPage)) ? "ce_white" : "transparent"} 
+                bgColor={(page != Math.ceil(items.length / itemsPerPage)) ? "ce_mainmaroon" : "transparent"}
+                boxSize="2em" borderRadius="2xl" 
+            />
         </HStack>
     )
 }
