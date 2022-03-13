@@ -19,7 +19,7 @@ function Carousel(props) {
     const styles = useStyleConfig("Carousel", {});
 
     const { items } = props;
-    const itemsPerPage = 4;
+    const itemsPerPage = 3;
     const [page, setPage] = useState(1);
 
     const [subsetOfItems, setSub] = useState([]);
@@ -71,9 +71,11 @@ function Carousel(props) {
                     <Tooltip label={title} aria-label={title} placement="right" borderRadius="md">
                         <VStack __css={styles} borderColor={color} bgColor={color} spacing={0} onClick={() => goToCourse(id)}>
                             <Flex height="50%" w="100%" justifyContent="right" pr={1}>
-                                
+                                {/** Top right of card */}
                             </Flex>
-                            <Flex height="50%" w="100%" color="ce_white" fontWeight="bold" fontFamily="button" fontSize="md" pl={1}>
+                            <Flex alignItems="end"
+                                height="50%" w="100%" pl={1}
+                                color="ce_white" fontWeight="bold" fontFamily="button" fontSize="md">
                                 {smallTitle.toUpperCase()}
                             </Flex>
                         </VStack>
