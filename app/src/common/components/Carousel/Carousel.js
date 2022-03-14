@@ -55,7 +55,7 @@ function Carousel(props) {
     }
 
     return (
-        <HStack spacing="35px" mt="15px" mb="15px" alignContent="center" justifyContent="center">
+        <HStack spacing="35px" mt="15px" mb="15px" alignContent="center" justifyContent="start">
             <ChevronLeftIcon onClick={decrementPage}
                 color={(page != 1) ? "ce_white" : "transparent"} 
                 bgColor={(page != 1) ? "ce_mainmaroon" : "transparent"}
