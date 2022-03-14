@@ -15,6 +15,8 @@ export async function getServerSideProps(context) {
 
   let myCourses = await getUserCourses(token);
 
+  console.log(typeof myCourses, myCourses);
+
   return {
     props: {
         myCourses: myCourses || [],
