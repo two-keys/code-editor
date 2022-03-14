@@ -23,9 +23,9 @@ function LoginForm() {
         if (process.env.NODE_ENV !== "development") {
             envDependentSettings = {
                 domain: (process.env.NEXT_PUBLIC_VERCEL_URL) ? process.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
+                secure: process.env.NODE_ENV !== "development",
                 /**    
                 httpOnly: true,
-                secure: process.env.NODE_ENV !== "development",
                 */
             }
         }
