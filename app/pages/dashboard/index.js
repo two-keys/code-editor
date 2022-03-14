@@ -8,7 +8,7 @@ import { getUserCourses } from "@Modules/Courses/Courses";
 import { parseCookies } from "@Utils/jwt";
 
 export async function getServerSideProps(context) {
-  const myCourses = [];
+  var myCourses = [];
 
   const cookies = parseCookies(context.req);
   console.log(cookies);
