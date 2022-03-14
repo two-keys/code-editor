@@ -7,7 +7,7 @@ import { Tooltip } from "@chakra-ui/tooltip";
 import paletteToRGB, { getRainbowAtIteration } from "@Utils/color";
 import { useEffect, useState } from "react";
 import Router from 'next/router';
-import { useStyleConfig } from "@chakra-ui/react";
+import { Text, useStyleConfig } from "@chakra-ui/react";
 
 /**
  * A component that allows horizontal, incremental scrolling
@@ -63,7 +63,6 @@ function Carousel(props) {
             />
             {subsetOfItems.map((item, subsetIndex) => {
                 const { id, title, author } = item;
-                let smallTitle = (title.length > 6) ? title.substr(0, 6) + "..." : title;
                 
                 // page is assumed to at minimum be one, so this is fine to do
                 let colorIterator = (((page - 1) * itemsPerPage) + subsetIndex) % 32;
@@ -77,8 +76,11 @@ function Carousel(props) {
                             </Flex>
                             <Flex alignItems="end"
                                 height="50%" w="100%" pl={1}
-                                color="ce_white" fontWeight="bold" fontFamily="button" fontSize="md">
-                                {smallTitle.toUpperCase()}
+                                color="ce_white" fontWeight="bold" fontFamily="button" fontSize="md"
+                            >
+                                <Text isTruncated>
+                                    {title.toUpperCase()}
+                                </Text>
                             </Flex>
                         </VStack>
                     </Tooltip>
