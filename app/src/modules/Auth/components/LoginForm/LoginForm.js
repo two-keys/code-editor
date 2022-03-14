@@ -15,38 +15,28 @@ function LoginForm() {
     const [passwordError, setPasswordError] = useState(undefined);
 
     async function handleSubmit(event) {
-        try {
-            setPasswordError(undefined);
-            let res = await login(event);
-            const token = res.data;
+        setPasswordError(undefined);
+        let res = await login(event);
+        const token = res.data;
 
-            const envDependentSettings = {};
-            if (process.env.NODE_ENV !== "development") {
-                envDependentSettings = {
-                    domain: (proces.env.NEXT_PUBLIC_VERCEL_URL) ? proces.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
-                    /**    
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV !== "development",
-                    */
-                }
+        const envDependentSettings = {};
+        if (process.env.NODE_ENV !== "development") {
+            envDependentSettings = {
+                domain: (proces.env.NEXT_PUBLIC_VERCEL_URL) ? proces.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
+                /**    
+                httpOnly: true,
+                secure: process.env.NODE_ENV !== "development",
+                */
             }
+        }
 
-            if (token) {
-                setCookie("user", token, { 
-                    path: "/",
-                    maxAge: maxAgeInHours * 60 * 60, //seconds
-                    sameSite: true, 
-                    ...envDependentSettings,
-                })
-            }
-        } catch(e) {
-            if(e.response) {
-               const status = e.response.data.statusCode;
-
-               if(status == 400) {
-                   setPasswordError("Password Incorrect");
-               }
-            }
+        if (token) {
+            setCookie("user", token, { 
+                path: "/",
+                maxAge: maxAgeInHours * 60 * 60, //seconds
+                sameSite: true, 
+                ...envDependentSettings,
+            })
         }
     }
 
