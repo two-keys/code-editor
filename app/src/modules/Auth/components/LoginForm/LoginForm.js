@@ -20,11 +20,20 @@ function LoginForm() {
             let res = await login(event);
             const token = res.data;
 
+            const envDependentSettings = {};
+            if (process.env.NODE_ENV !== "development") {
+                envDependentSettings = {
+                  httpOnly: true,
+                  secure: process.env.NODE_ENV !== "development",
+                }
+            }
+
             if (token) {
                 setCookie("user", token, { 
                     path: "/",
                     maxAge: maxAgeInHours * 60 * 60, //seconds
-                    sameSite: true,
+                    sameSite: true, 
+                    ...envDependentSettings,
                 })
             }
         } catch(e) {
