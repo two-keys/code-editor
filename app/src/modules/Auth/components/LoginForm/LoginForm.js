@@ -23,8 +23,11 @@ function LoginForm() {
             const envDependentSettings = {};
             if (process.env.NODE_ENV !== "development") {
                 envDependentSettings = {
-                  httpOnly: true,
-                  secure: process.env.NODE_ENV !== "development",
+                    domain: (proces.env.NEXT_PUBLIC_VERCEL_URL) ? proces.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
+                    /**    
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV !== "development",
+                    */
                 }
             }
 
