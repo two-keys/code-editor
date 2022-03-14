@@ -8,18 +8,22 @@ import { getUserCourses } from "@Modules/Courses/Courses";
 import { parseCookies } from "@Utils/jwt";
 
 export async function getServerSideProps(context) {
+  const myCourses = [];
+
   const cookies = parseCookies(context.req);
   console.log(cookies);
   const isLoggedIn = loggedIn(cookies.user);
   let token = cookies.user;
 
-  let myCourses = await getUserCourses(token);
+  let myCoursesResponse = await getUserCourses(token);
+  if (myCoursesResponse)
+    myCourses = myCoursesResponse;
 
   console.log(typeof myCourses, myCourses);
 
   return {
     props: {
-        myCourses: myCourses || [],
+        myCourses: myCourses,
     }, // will be passed to the page component as props
   }
 }  
