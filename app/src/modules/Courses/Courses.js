@@ -55,14 +55,17 @@ async function getCourseDetails(id, token) {
     }
 
     let courseResponse;
-
-    
+    console.log(token);
+    try {
         courseResponse = await instance.get("/Courses/GetUserCourses", {
             headers: {...headers},
         });
         
         if (courseResponse.statusText == "OK")
         return courseResponse.data;
+    } catch (error) {
+        //console.log(error);
+    }
     return false;
 }
 
