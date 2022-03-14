@@ -5,9 +5,10 @@ import SectionHeader from "@Components/SectionHeader/SectionHeader";
 import SNoLink from "@Components/SNoLink/SNoLink";
 import { loggedIn } from "@Modules/Auth/Auth";
 import { getUserCourses } from "@Modules/Courses/Courses";
+import { parseCookies } from "@Utils/jwt";
 
 export async function getServerSideProps(context) {
-  const cookies = context.req.cookies;
+  const cookies = parseCookies(context.req);
   console.log(cookies);
   const isLoggedIn = loggedIn(cookies.user);
   let token = cookies.user;

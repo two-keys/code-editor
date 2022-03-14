@@ -1,13 +1,16 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import Header from "@Components/Header/Header";
 import theme from '@Utils/theme'
+import { CookiesProvider } from "react-cookie";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
-      <Header />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <CookiesProvider>
+      <ChakraProvider theme={theme}>
+        <Header />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </CookiesProvider>
   )
 }
 

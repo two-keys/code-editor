@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 
 const keys = {
     role: "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
@@ -61,4 +62,13 @@ function getName(token) {
     return decoded[keys.id];
 }
 
-export { keys as JWTKeys, decode, getRole, getName, getID };
+/**
+ * 
+ * @param {HttpRequest} req 
+ * @returns 
+ */
+function parseCookies(req) {
+    return cookie.parse(req ? req.headers.cookie || "" : document.cookie)
+}
+
+export { keys as JWTKeys, decode, getRole, getName, getID, parseCookies };
