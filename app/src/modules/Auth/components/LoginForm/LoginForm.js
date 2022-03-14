@@ -22,7 +22,7 @@ function LoginForm() {
         const envDependentSettings = {};
         if (process.env.NODE_ENV !== "development") {
             envDependentSettings = {
-                domain: (process.env.NEXT_PUBLIC_VERCEL_URL) ? process.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
+                
                 /**    
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== "development",
@@ -35,7 +35,7 @@ function LoginForm() {
                 path: "/",
                 maxAge: maxAgeInHours * 60 * 60, //seconds
                 sameSite: true, 
-                ...envDependentSettings,
+                domain: (process.env.NEXT_PUBLIC_VERCEL_URL) ? process.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
             })
         }
     }
