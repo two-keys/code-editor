@@ -65,6 +65,7 @@ async function getCourseDetails(id, token) {
         return courseResponse.data;
     } catch (error) {
         //console.log(error);
+        console.log(token);
     }
     return false;
 }
