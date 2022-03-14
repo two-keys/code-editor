@@ -19,7 +19,7 @@ function LoginForm() {
         let res = await login(event);
         const token = res.data;
 
-        const envDependentSettings = {};
+        var envDependentSettings = {};
         if (process.env.NODE_ENV !== "development") {
             envDependentSettings = {
                 
@@ -35,7 +35,7 @@ function LoginForm() {
                 path: "/",
                 maxAge: maxAgeInHours * 60 * 60, //seconds
                 sameSite: true, 
-                domain: (process.env.NEXT_PUBLIC_VERCEL_URL) ? process.env.NEXT_PUBLIC_VERCEL_URL : 'localhost',
+                ...envDependentSettings,
             })
         }
     }
