@@ -5,7 +5,9 @@ const CarouselStyle = {
         cursor: "pointer",
         bgColor: "black",
         border: "solid black 1px",
-        borderRadius: "xl",
+        borderRadius: "3xl",
+        paddingBottom: 3,
+        paddingLeft: 3,
     },
 }
 
