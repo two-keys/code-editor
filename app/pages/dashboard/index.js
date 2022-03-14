@@ -8,6 +8,7 @@ import { getUserCourses } from "@Modules/Courses/Courses";
 
 export async function getServerSideProps(context) {
   const cookies = context.req.cookies;
+  console.log(cookies);
   const isLoggedIn = loggedIn(cookies.user);
   let token = cookies.user;
 
