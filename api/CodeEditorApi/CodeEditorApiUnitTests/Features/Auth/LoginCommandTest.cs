@@ -21,7 +21,7 @@ namespace CodeEditorApiUnitTests.Features.Auth
         {
             var body = fixture.Create<LoginBody>();
             var user = fixture.Create<User>();
-            var expected = new BadRequestError("User does not exist");
+            var expected = new BadRequestError("User does not exist or not verified");
 
             Freeze<IGetUser>()
                 .Setup(x => x.ExecuteAsync(body.Email))
