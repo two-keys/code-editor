@@ -1,5 +1,4 @@
-﻿using CodeEditorApi.Errors;
-using CodeEditorApi.Features.Auth.Login;
+﻿using CodeEditorApi.Features.Auth.Login;
 using CodeEditorApi.Features.Auth.Register;
 using CodeEditorApi.Features.Auth.UpdateUser;
 using CodeEditorApi.Features.Auth.VerifyAccount;
@@ -49,10 +48,10 @@ namespace CodeEditorApi.Features.Auth
         [AllowAnonymous]
         public async Task<ActionResult> Register([FromBody] RegisterBody registerBody)
         {
-            if(_enviornment.EnvironmentName == "Staging")
+            /*if(_enviornment.EnvironmentName == "Staging")
             {
                 return ApiError.BadRequest("Route is disabled in staging");
-            }
+            }*/
             return await _registerCommand.ExecuteAsync(registerBody);
         }
 
