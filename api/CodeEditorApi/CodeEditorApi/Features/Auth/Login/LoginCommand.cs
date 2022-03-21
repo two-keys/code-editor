@@ -37,7 +37,8 @@ namespace CodeEditorApi.Features.Auth.Login
 
             if (user == null || !user.IsConfirmed) return ApiError.BadRequest("User does not exist or not verified");
 
-            if(_hashService.ComparePassword(user.Hash, loginBody.Password))
+
+            if (_hashService.ComparePassword(user.Hash, loginBody.Password))
             {
                 return _jwtService.GenerateToken(_configuration, user);
             }

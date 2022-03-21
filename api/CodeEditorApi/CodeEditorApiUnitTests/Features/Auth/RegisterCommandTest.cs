@@ -48,11 +48,10 @@ namespace CodeEditorApiUnitTests.Features.Auth
                 .With(x => x.AccessCode, accessCode)
                 .With(x => x.Role, role)
                 .Create();
-            var user = fixture.Create<User>();
             var expected = new BadRequestError("Invalid Access Code");
 
             Freeze<IGetUser>()
-                .Setup(x => x.ExecuteAsync(body.Email))
+                .Setup(x => x.ExecuteAsync(body.Email.ToLower()))
                 .ReturnsAsync((User)null);
 
             var actionResult = await Target().ExecuteAsync(body);
@@ -61,7 +60,7 @@ namespace CodeEditorApiUnitTests.Features.Auth
             result.Should().NotBeNull();
             result.Value.Should().BeEquivalentTo(expected);
 
-            Freeze<IGetUser>().Verify(x => x.ExecuteAsync(body.Email), Times.Once);
+            Freeze<IGetUser>().Verify(x => x.ExecuteAsync(body.Email.ToLower()), Times.Once);
         }
 
         /* This test may fail due to race conditions on AccessCodeService, will be fixed when switched to redis */
@@ -76,12 +75,14 @@ namespace CodeEditorApiUnitTests.Features.Auth
                 .With(x => x.AccessCode, accessCode)
                 .With(x => x.Role, Roles.Teacher)
                 .Create();
-            var user = fixture.Create<User>();
+
             var expected = new BadRequestError("Invalid Access Code");
 
             Freeze<IGetUser>()
-                .Setup(x => x.ExecuteAsync(body.Email))
+                .Setup(x => x.ExecuteAsync(body.Email.ToLower()))
                 .ReturnsAsync((User)null);
+
+                
 
             var actionResult = await Target().ExecuteAsync(body);
 
@@ -89,7 +90,7 @@ namespace CodeEditorApiUnitTests.Features.Auth
             result.Should().NotBeNull();
             result.Value.Should().BeEquivalentTo(expected);
 
-            Freeze<IGetUser>().Verify(x => x.ExecuteAsync(body.Email), Times.Once);
+            Freeze<IGetUser>().Verify(x => x.ExecuteAsync(body.Email.ToLower()), Times.Once);
 
             AccessCodeService.ClearCodes();
         }
@@ -104,7 +105,7 @@ namespace CodeEditorApiUnitTests.Features.Auth
             var token = fixture.Create<string>();
 
             Freeze<IGetUser>()
-                .Setup(x => x.ExecuteAsync(body.Email))
+                .Setup(x => x.ExecuteAsync(body.Email.ToLower()))
                 .ReturnsAsync((User)null);
 
             Freeze<IRegister>()
@@ -117,11 +118,9 @@ namespace CodeEditorApiUnitTests.Features.Auth
 
             var actionResult = await Target().ExecuteAsync(body);
 
-            actionResult.Should().BeNull();
 
-            Freeze<IGetUser>().Verify(x => x.ExecuteAsync(body.Email), Times.Once);
+            Freeze<IGetUser>().Verify(x => x.ExecuteAsync(body.Email.ToLower()), Times.Once);
             Freeze<IRegister>().Verify(x => x.ExecuteAsync(body), Times.Once);
-            Freeze<IJwtService>().Verify(x => x.GenerateToken(Freeze<IConfiguration>().Object, user), Times.Once);
         }
 
         // We test the validation of the model, since it is prety much testing the Regular Expression Used
