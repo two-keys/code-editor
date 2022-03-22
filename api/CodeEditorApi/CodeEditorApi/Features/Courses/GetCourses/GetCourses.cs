@@ -20,6 +20,8 @@ namespace CodeEditorApi.Features.Courses.GetCourses
         public Task<List<Course>> GetAllPublishedCoursesSortByModifyDate();
 
         public Task<List<Course>> GetMostPopularCourses();
+
+        public Task<List<Course>> SearchCourses(SearchInput si);
     }
     public class GetCourses : IGetCourses
     {
@@ -52,7 +54,7 @@ namespace CodeEditorApi.Features.Courses.GetCourses
         {
             return await _context.Courses
                 .Where(c => c.IsPublished == true)
-                .Select(c => new Course{
+                .Select(c => new Course {
                     Id = c.Id,
                     Title = c.Title,
                     Author = c.Author
@@ -74,7 +76,7 @@ namespace CodeEditorApi.Features.Courses.GetCourses
 
         public async Task<List<Course>> GetMostPopularCourses()
         {
-            int top = 10;            
+            int top = 10;
 
             var result = await _context.UserRegisteredCourses
                 .GroupBy(c => c.CourseId)
@@ -88,6 +90,53 @@ namespace CodeEditorApi.Features.Courses.GetCourses
 
             return courses;
 
+        }
+
+        public async Task<List<Course>> SearchCourses(SearchInput si)
+        {
+            var LID = si.languageId;
+            var DID = si.difficultyId;
+            var courseIds = new List<int>();
+
+            //if filtering by both Language and Difficulty
+            if (LID > 0 && DID > 0)
+            {
+                courseIds = await _context.Tutorials
+                                    .Where(t => t.Title.ToLower().Contains(si.searchString.ToLower())
+                                        || t.LanguageId == si.languageId
+                                        || t.DifficultyId == si.difficultyId)
+                                    .Select(t => t.CourseId).Distinct()
+                                    .ToListAsync();
+            }//if filtering by only Language
+            else if (LID > 0 && DID == 0)
+            {
+                courseIds = await _context.Tutorials
+                                    .Where(t => t.Title.ToLower().Contains(si.searchString.ToLower())
+                                        || t.LanguageId == si.languageId)
+                                    .Select(t => t.CourseId).Distinct()
+                                    .ToListAsync();
+            }//if filtering by only Difficulty
+            else if (LID == 0 && DID > 0)
+            {
+                courseIds = await _context.Tutorials
+                                    .Where(t => t.Title.ToLower().Contains(si.searchString.ToLower())
+                                        || t.DifficultyId == si.difficultyId)
+                                    .Select(t => t.CourseId).Distinct()
+                                    .ToListAsync();
+            }//if not filtering by either Language or Difficulty
+            else {
+                courseIds = await _context.Tutorials
+                                    .Where(t => t.Title.ToLower().Contains(si.searchString.ToLower()))                   
+                                    .Select(t => t.CourseId).Distinct()
+                                    .ToListAsync();
+            }           
+
+            var courseDetails = await _context.Courses.Where(c => c.Title.Contains(si.searchString) || courseIds.Contains(c.Id)).ToListAsync();
+
+            
+
+            return courseDetails; //needs pagination
+            
         }
     }
 }
