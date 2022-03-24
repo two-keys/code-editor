@@ -1,7 +1,7 @@
 import { Grid, GridItem, HStack, Divider, Center } from "@chakra-ui/layout";
 import { Tag, TagLabel } from "@chakra-ui/tag";
 import Router from "next/router";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { checkIfInCourse, registerForCourse } from "@Modules/Courses/Courses";
 import { tutorialStatus } from "@Utils/static";
 import { getRole } from "@Utils/jwt";
@@ -65,8 +65,8 @@ function TutorialItem(props) {
 
     return(
         <Grid templateColumns="repeat(5, 1fr)" gap={6} pl={5} mt={15} mb={15}>
-            <GridItem>
-                {title}
+            <GridItem colSpan={3}>
+                <Text isTruncated maxW="270px">{title}</Text>
             </GridItem>
             <GridItem colStart={4}>
                 <HStack spacing={3}>

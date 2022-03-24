@@ -19,7 +19,7 @@ import CourseAvatar from "@Modules/Courses/components/CourseAvatar/CourseAvatar"
 function Carousel(props) {
     const styles = useStyleConfig("Carousel", {});
 
-    const { items } = props;
+    const { items, direction = 'horizontal' } = props;
     const itemsPerPage = 3;
     const [page, setPage] = useState(1);
 
@@ -55,8 +55,10 @@ function Carousel(props) {
         setPage(Math.min(page + 1, Math.ceil(items.length / itemsPerPage)));
     }
 
+    const RootComponent = (direction == 'vertical') ? VStack : HStack;
+
     return (
-        <HStack spacing="35px" mt="15px" mb="15px" alignContent="center" justifyContent="start">
+        <RootComponent spacing="35px" mt="15px" mb="15px" alignContent="center" justifyContent="start">
             <ChevronLeftIcon onClick={decrementPage}
                 color={(page != 1) ? "ce_white" : "transparent"} 
                 bgColor={(page != 1) ? "ce_mainmaroon" : "transparent"}
@@ -92,7 +94,7 @@ function Carousel(props) {
                 bgColor={(page != Math.ceil(items.length / itemsPerPage)) ? "ce_mainmaroon" : "transparent"}
                 boxSize="2em" borderRadius="2xl" 
             />
-        </HStack>
+        </RootComponent>
     )
 }
 
