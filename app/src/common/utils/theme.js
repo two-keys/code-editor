@@ -10,6 +10,7 @@ import TagStyle from "@Common/styles/Tag.style";
 import TextareaStyle from "@Common/styles/Textarea.style";
 import CarouselStyle from "@Common/styles/Carousel.style";
 import PopoverStyle from "@Common/styles/Popover.style";
+import CourseBoxStyle from "@Common/styles/CourseBox.style";
 
 // ce_ is prepended to differentiate from default css colors
 const colors = {
@@ -115,6 +116,7 @@ const components = {
   Select: SelectStyle,
   Carousel: CarouselStyle,
   Popover: PopoverStyle,
+  CourseBox: CourseBoxStyle
 }
 
 const theme = extendTheme({ colors, config, fonts, fontSizes, styles, components })
